@@ -1,0 +1,14 @@
+{
+  "name": "spezzoni-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client/index.js",
+  "scripts": {
+    "start:server": "cd server/ && npm run start",
+    "start:client": "cd client/ && npm run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "albertopravisano",
+  "license": "ISC"
+}
