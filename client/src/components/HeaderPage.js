@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
+
 import { ABACO, HOME } from "../routes";
+import LoginButtonForm from "./LoginButtonForm";
 
 const HeaderPage = () => {
   return (
@@ -11,9 +13,7 @@ const HeaderPage = () => {
       </Menu.Item>
       <NavItem name="Bacheca" to={HOME} />
       <NavItem name="Abaco" to={ABACO} />
-      <Menu.Item position="right" onClick={() => {}}>
-        <Icon name="user" /> Login
-      </Menu.Item>
+      <LoginButtonForm position="right" />
     </Menu>
   );
 };
