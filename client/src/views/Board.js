@@ -4,6 +4,11 @@ import { Input, Button, Grid } from "semantic-ui-react";
 const Board = () => {
   return (
     <Grid>
+      <Grid.Row />
+      <Grid.Row />
+      <Grid.Row />
+      <Grid.Row centered>Spezzoni (Logo)</Grid.Row>
+      <Grid.Row />
       <Grid.Row centered stretched>
         <Grid.Column>
           <Input placeholder="Digita qui quello che vuoi cercare o proporre..." />
