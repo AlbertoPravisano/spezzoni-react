@@ -33,7 +33,7 @@ const LoginModal = ({ setModalOpen }) => {
         <LoginForm />
         <br />
         <Divider horizontal>oppure</Divider>
-        <SubscribeForm />
+        <RegisterForm />
         <br />
         <Button positive fluid onClick={() => {}}>
           Registrati
@@ -82,24 +82,33 @@ const LoginForm = () => {
   );
 };
 
-const SubscribeForm = () => {
-  // const [fields, setFields] = React.useState({});
+const RegisterForm = () => {
+  const [fields, setFields] = React.useState({});
   const [isError, setIsError] = React.useState(false);
   const options = [
     { key: "m", text: "Uomo", value: "male" },
     { key: "f", text: "Donna", value: "female" },
     { key: "o", text: "Altro", value: "other" },
   ];
+
+  React.useEffect(() => {
+    if (fields.psw !== fields.psw2) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [fields]);
+
   return (
     <Form error={isError} onSubmit={() => setIsError(true)}>
       <Form.Group widths="equal">
         <Form.Input
-          name="name"
           icon="user"
           iconPosition="left"
           label="Nome"
           placeholder="nome..."
           error={isError}
+          onBlur={(e) => setFields({ ...fields, name: e.target.value })}
         />
         <Form.Input
           name="surname"
@@ -108,39 +117,34 @@ const SubscribeForm = () => {
           label="Cognome"
           placeholder="cognome..."
           error={isError}
+          onBlur={(e) => setFields({ ...fields, surname: e.target.value })}
         />
-        <Form.Select
-          fluid
-          name="sex"
-          iconPosition="left"
-          label="Sesso"
-          options={options}
-        />
+        <Form.Select fluid name="sex" label="Sesso" options={options} />
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Input
-          name="usr"
           icon="user"
           iconPosition="left"
           label="Username"
           placeholder="username..."
           error={isError}
+          onBlur={(e) => setFields({ ...fields, usr: e.target.value })}
         />
         <Form.Input
-          name="psw"
           icon="lock"
           iconPosition="left"
           label="Password"
           type="password"
           error={isError}
+          onBlur={(e) => setFields({ ...fields, psw: e.target.value })}
         />
         <Form.Input
-          name="psw2"
           icon="lock"
           iconPosition="left"
           label="Conferma password"
           type="password"
           error={isError}
+          onBlur={(e) => setFields({ ...fields, psw2: e.target.value })}
         />
       </Form.Group>
       <Form.Field
