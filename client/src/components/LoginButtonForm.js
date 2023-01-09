@@ -20,7 +20,7 @@ const LoginModal = ({ setModalOpen }) => {
   const [isError, setIsError] = React.useState();
   return (
     <Modal closeIcon open dimmer="blurring" onClose={() => setModalOpen(false)}>
-      <Modal.Header>Login</Modal.Header>
+      <Modal.Header>Effettua il login...</Modal.Header>
       <Modal.Content>
         <Form error={isError} onSubmit={() => setIsError(true)}>
           {isError && (
@@ -33,6 +33,8 @@ const LoginModal = ({ setModalOpen }) => {
           <Form.Input
             fluid
             name="usr"
+            icon="user"
+            iconPosition="left"
             label="Username"
             placeholder="username..."
             error={isError}
@@ -40,6 +42,8 @@ const LoginModal = ({ setModalOpen }) => {
           <Form.Input
             fluid
             name="psw"
+            icon="lock"
+            iconPosition="left"
             label="Password"
             type="password"
             error={isError}
@@ -48,8 +52,8 @@ const LoginModal = ({ setModalOpen }) => {
             name="save_credentials"
             label="Ricorda le credenziali"
           />
-          <Button primary type="submit" floated="right">
-            Invia
+          <Button primary type="submit" fluid>
+            Login
           </Button>
           <br />
           <br />
