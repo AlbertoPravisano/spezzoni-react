@@ -11,7 +11,11 @@ const Board = () => {
       <Grid.Row />
       <Grid.Row centered stretched>
         <Grid.Column>
-          <Input placeholder="Digita qui quello che vuoi cercare o proporre..." />
+          <Input
+            icon="search"
+            iconPosition="left"
+            placeholder="Digita qui quello che vuoi cercare o proporre..."
+          />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row centered stretched>
