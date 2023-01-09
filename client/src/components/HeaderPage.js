@@ -1,19 +1,38 @@
 import React from "react";
-import { Menu, MenuItem, Icon } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Menu, Icon } from "semantic-ui-react";
 
 const HeaderPage = () => {
   return (
     <Menu>
-      <MenuItem>
+      <Menu.Item>
         <Icon name="checkmark" /> Spezzoni
-      </MenuItem>
-      <MenuItem onClick={() => {}}>Bacheca</MenuItem>
-      <MenuItem active>Abaco</MenuItem>
-      <MenuItem position="right" onClick={() => {}}>
+      </Menu.Item>
+      <NavItem name="Bacheca" to="/" />
+      <NavItem name="Abaco" to="/abaco" />
+      <Menu.Item position="right" onClick={() => {}}>
         <Icon name="user" /> Login
-      </MenuItem>
+      </Menu.Item>
     </Menu>
   );
 };
 
 export default HeaderPage;
+
+const NavItem = ({ to, name, icon }) => {
+  const [active, setActive] = React.useState(false);
+  return (
+    <Menu.Item as="a" active={active}>
+      <NavLink
+        to={to}
+        style={({ isActive }) => {
+          setActive(isActive);
+          return {};
+        }}
+      >
+        {icon && <Icon name={icon} />}
+        {name}
+      </NavLink>
+    </Menu.Item>
+  );
+};
