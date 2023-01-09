@@ -1,8 +1,10 @@
 import React from "react";
-import { Container, Header, Loader, Segment, Dimmer } from "semantic-ui-react";
+import { Container, Loader, Segment, Dimmer } from "semantic-ui-react";
 import DataGrid, { textEditor } from "react-data-grid";
 import { read, utils } from "xlsx";
 import HeaderPage from "./components/HeaderPage";
+
+const SOURCE_XLSX = "source.xlsx";
 
 const wb_to_rdg = (workbook) => {
   /* create an array of arrays */
@@ -23,7 +25,7 @@ const App = () => {
   const [table, setTable] = React.useState();
 
   React.useEffect(() => {
-    fetch("source.xlsx")
+    fetch(SOURCE_XLSX)
       .then((res) => res.arrayBuffer())
       .then((ab) => {
         const wb = read(ab.toString(), { type: "base64" });
