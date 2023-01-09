@@ -7,7 +7,7 @@ import Abaco from "./views/Abaco";
 import Bacheca from "./views/Board";
 import PageNotFound from "./views/PageNotFound";
 import FooterPage from "./components/FooterPage";
-import { ABACO, HOME } from "./routes";
+import { ABACO, BASE_PATH } from "./routes";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <HeaderPage />
         <Container>
           <Routes>
-            <Route path={HOME} element={<Bacheca />} />
+            <Route path={BASE_PATH} element={<Bacheca />} />
             <Route path={ABACO} element={<Abaco />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
