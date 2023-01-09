@@ -7,16 +7,16 @@ import Abaco from "./views/Abaco";
 import Bacheca from "./views/Board";
 import PageNotFound from "./views/PageNotFound";
 import FooterPage from "./components/FooterPage";
-import { ABACO, BASE_PATH } from "./routes";
+import { ABACO, HOME, BASE_PATH } from "./routes";
 
 const App = () => {
   return (
     <React.Fragment>
-      <BrowserRouter>
+      <BrowserRouter basename={BASE_PATH}>
         <HeaderPage />
         <Container>
           <Routes>
-            <Route path={BASE_PATH} element={<Bacheca />} />
+            <Route path={HOME} element={<Bacheca />} />
             <Route path={ABACO} element={<Abaco />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>

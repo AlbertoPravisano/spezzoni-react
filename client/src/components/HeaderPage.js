@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
 
-import { ABACO, BASE_PATH } from "../routes";
+import { ABACO, HOME } from "../routes";
 import LoginButtonForm from "./LoginButtonForm";
 
 const HeaderPage = () => {
@@ -11,7 +11,7 @@ const HeaderPage = () => {
       <Menu.Item>
         <Icon name="checkmark" /> Spezzoni
       </Menu.Item>
-      <NavItem name="Bacheca" to={BASE_PATH} />
+      <NavItem name="Bacheca" to={HOME} />
       <NavItem name="Abaco" to={ABACO} />
       <LoginButtonForm position="right" />
     </Menu>
