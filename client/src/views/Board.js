@@ -14,7 +14,7 @@ const Board = () => {
           <Input
             icon="search"
             iconPosition="left"
-            placeholder="Digita qui quello che vuoi cercare o proporre..."
+            placeholder="Digita qui quello che vuoi cercare o offrire..."
           />
         </Grid.Column>
       </Grid.Row>
