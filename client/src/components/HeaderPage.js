@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
+import { ABACO, HOME } from "../routes";
 
 const HeaderPage = () => {
   return (
@@ -8,8 +9,8 @@ const HeaderPage = () => {
       <Menu.Item>
         <Icon name="checkmark" /> Spezzoni
       </Menu.Item>
-      <NavItem name="Bacheca" to="/" />
-      <NavItem name="Abaco" to="/abaco" />
+      <NavItem name="Bacheca" to={HOME} />
+      <NavItem name="Abaco" to={ABACO} />
       <Menu.Item position="right" onClick={() => {}}>
         <Icon name="user" /> Login
       </Menu.Item>

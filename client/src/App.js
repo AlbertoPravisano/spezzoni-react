@@ -7,6 +7,7 @@ import Abaco from "./views/Abaco";
 import Bacheca from "./views/Board";
 import PageNotFound from "./views/PageNotFound";
 import FooterPage from "./components/FooterPage";
+import { ABACO, HOME } from "./routes";
 
 const App = () => {
   return (
@@ -15,8 +16,8 @@ const App = () => {
         <HeaderPage />
         <Container>
           <Routes>
-            <Route path="/" element={<Bacheca />} />
-            <Route path="/abaco" element={<Abaco />} />
+            <Route path={HOME} element={<Bacheca />} />
+            <Route path={ABACO} element={<Abaco />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Container>
