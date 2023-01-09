@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
 
 import { ABACO, HOME } from "../routes";
-import LoginButtonForm from "./LoginButtonForm";
+import LoginButtonForm from "./login/LoginButtonForm";
 
 const HeaderPage = () => {
   return (
