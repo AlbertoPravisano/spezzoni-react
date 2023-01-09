@@ -23,7 +23,7 @@ export default HeaderPage;
 const NavItem = ({ to, name, icon }) => {
   const [active, setActive] = React.useState(false);
   return (
-    <Menu.Item as="a" active={active}>
+    <Menu.Item active={active}>
       <NavLink
         to={to}
         style={({ isActive }) => {
