@@ -6,6 +6,7 @@ import HeaderPage from "./components/HeaderPage";
 import Abaco from "./views/Abaco";
 import Bacheca from "./views/Board";
 import PageNotFound from "./views/PageNotFound";
+import FooterPage from "./components/FooterPage";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Container>
+        <FooterPage />
       </BrowserRouter>
     </React.Fragment>
   );
