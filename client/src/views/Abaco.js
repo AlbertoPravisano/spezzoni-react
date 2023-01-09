@@ -9,7 +9,7 @@ const Abaco = () => {
     <iframe
       title="Abaco"
       src={`https://view.officeapps.live.com/op/embed.aspx?src=${url.origin}${BASE_PATH}/${SOURCE_XLSX}`}
-      style={{ height: "30em", width: "inherit" }}
+      style={{ height: "40em", width: "inherit" }}
     />
   );
 };
