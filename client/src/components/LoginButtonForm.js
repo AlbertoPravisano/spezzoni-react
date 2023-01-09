@@ -52,10 +52,10 @@ const LoginModal = ({ setModalOpen }) => {
             name="save_credentials"
             label="Ricorda le credenziali"
           />
+          <br />
           <Button primary type="submit" fluid>
             Login
           </Button>
-          <br />
           <br />
         </Form>
       </Modal.Content>
