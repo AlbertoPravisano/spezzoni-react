@@ -3,14 +3,22 @@ import { Input, Button, Grid } from "semantic-ui-react";
 
 const Board = () => {
   const path = process.env.PUBLIC_URL;
-  const image = "/spezzoni/logo.png";
   return (
     <Grid>
       <Grid.Row />
       <Grid.Row />
       <Grid.Row />
       <Grid.Row centered>
-        <img alt="logo" src={path + image} />
+        <div>
+          <img alt="logo" src={`${path}/spezzoni/logo.png`} />
+        </div>
+        <div>
+          <img
+            alt="logo"
+            src={`${path}/spezzoni/subtitle.png`}
+            style={{ width: "40%" }}
+          />
+        </div>
       </Grid.Row>
       <Grid.Row />
       <Grid.Row centered stretched>

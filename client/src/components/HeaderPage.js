@@ -7,11 +7,10 @@ import LoginButtonForm from "./login/LoginButtonForm";
 
 const HeaderPage = () => {
   const path = process.env.PUBLIC_URL;
-  const image = "/spezzoni/icon.png";
   return (
     <Menu>
       <Menu.Item>
-        <img alt="home" src={path + image} /> Home
+        <img alt="home" src={`${path}/spezzoni/icon.png`} /> Home
       </Menu.Item>
       <NavItem name="Bacheca" to={HOME} />
       <NavItem name="Abaco" to={ABACO} />
