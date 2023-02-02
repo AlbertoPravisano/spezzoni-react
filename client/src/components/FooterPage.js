@@ -25,7 +25,9 @@ const FooterPage = () => {
           <div>
             <strong>Quando trovarci</strong>
           </div>
-          <div>Cellulare: 340-2934089</div>
+          <div>
+            Cellulare: <a href="tel:+393402934089">340-2934089</a>
+          </div>
           <div>
             <strong>Orari</strong>
           </div>
