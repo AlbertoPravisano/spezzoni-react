@@ -3,6 +3,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "routes";
 import { Form, Checkbox, Button } from "semantic-ui-react";
+import { getDataMinimaMaggiorenne, isOverEighteen } from "utils/dates";
+
+const regex = new RegExp(
+  "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"
+);
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -41,6 +46,35 @@ const RegisterForm = () => {
           placeholder="cognome..."
           error={isError}
           onBlur={(e) => setFields({ ...fields, surname: e.target.value })}
+        />
+      </Form.Group>
+      <Form.Group widths="equal">
+        <Form.Input
+          type="phone"
+          name="phone"
+          icon="phone"
+          iconPosition="left"
+          label="Numero di telefono"
+          placeholder="+39 333-3333333"
+          error={isError || (fields.phone && !regex.test(fields.phone))}
+          onBlur={(e) =>
+            setFields({
+              ...fields,
+              phone: e.target.value.replace("-", "").replace(" ", ""),
+            })
+          }
+        />
+        <Form.Input
+          type="date"
+          name="birthday"
+          icon="birthday"
+          iconPosition="left"
+          label="Data di nascita"
+          error={
+            isError || (fields.birthday && !isOverEighteen(fields.birthday))
+          }
+          max={getDataMinimaMaggiorenne()}
+          onBlur={(e) => setFields({ ...fields, birthday: e.target.value })}
         />
         <Form.Select fluid name="sex" label="Sesso" options={options} />
       </Form.Group>

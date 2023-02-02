@@ -1,5 +1,6 @@
 import React from "react";
 import { Divider, Grid } from "semantic-ui-react";
+import SocialButton from "./button/SocialButton";
 
 const FooterPage = () => {
   return (
@@ -20,8 +21,17 @@ const FooterPage = () => {
         <Grid.Column width="6" style={{ paddingBottom: 0 }}>
           <Contatti />
         </Grid.Column>
-        <Grid.Column width="2" style={{ paddingBottom: 0 }}></Grid.Column>
-        <Grid.Column width="8" style={{ paddingBottom: 0 }}>
+        <Grid.Column width="3" style={{ paddingBottom: 0 }}>
+          <div>
+            <strong>Contatti</strong>
+          </div>
+          <div>
+            <SocialButton soloIcona href="https://www.telegram.me/" />
+            <SocialButton soloIcona href="https://www.whatsapp.org/" />
+            <SocialButton soloIcona href="https://www.linkedin.com/" />
+          </div>
+        </Grid.Column>
+        <Grid.Column width="7" style={{ paddingBottom: 0 }}>
           This site does not use any cookie
         </Grid.Column>
       </Grid>
