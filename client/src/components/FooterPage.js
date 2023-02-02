@@ -17,22 +17,8 @@ const FooterPage = () => {
     >
       <Divider />
       <Grid>
-        <Grid.Column
-          width="6"
-          textAlign="justified"
-          style={{ paddingBottom: 0 }}
-        >
-          <div>
-            <strong>Quando trovarci</strong>
-          </div>
-          <div>
-            Cellulare: <a href="tel:+393402934089">340-2934089</a>
-          </div>
-          <div>
-            <strong>Orari</strong>
-          </div>
-          <div>Lunedì-Venerdì: 17.00 - 19.00</div>
-          <div>Sabato: 10.00 - 12.00</div>
+        <Grid.Column width="6" style={{ paddingBottom: 0 }}>
+          <Contatti />
         </Grid.Column>
         <Grid.Column width="2" style={{ paddingBottom: 0 }}></Grid.Column>
         <Grid.Column width="8" style={{ paddingBottom: 0 }}>
@@ -44,3 +30,21 @@ const FooterPage = () => {
 };
 
 export default FooterPage;
+
+const Contatti = () => {
+  return (
+    <React.Fragment>
+      <div>
+        <strong>Quando trovarci</strong>
+      </div>
+      <div>
+        Cellulare: <a href="tel:+393402934089">340-2934089</a>
+      </div>
+      <div>
+        <strong>Orari</strong>
+      </div>
+      <div>Lunedì-Venerdì: 17.00 - 19.00</div>
+      <div>Sabato: 10.00 - 12.00</div>
+    </React.Fragment>
+  );
+};
