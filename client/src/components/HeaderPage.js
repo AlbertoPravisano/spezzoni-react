@@ -9,10 +9,12 @@ const HeaderPage = () => {
   const path = process.env.PUBLIC_URL;
   return (
     <Menu>
-      <Menu.Item>
-        <img alt="home" src={`${path}/spezzoni/icon.png`} /> Home
-      </Menu.Item>
-      <NavItem name="Bacheca" to={HOME} />
+      <NavItem
+        name="Home"
+        to={HOME}
+        altImg="home"
+        img={`${path}/spezzoni/icon.png`}
+      />
       <NavItem name="Abaco" to={ABACO} />
       <LoginButtonForm position="right" />
     </Menu>
@@ -21,18 +23,28 @@ const HeaderPage = () => {
 
 export default HeaderPage;
 
-const NavItem = ({ to, name, icon }) => {
+const NavItem = ({ to, name, icon, img, altImg }) => {
   const [active, setActive] = React.useState(false);
+  const navItemStyle = ({ isActive }) => {
+    setActive(isActive);
+    return {};
+  };
   return (
     <Menu.Item active={active}>
-      <NavLink
-        to={to}
-        style={({ isActive }) => {
-          setActive(isActive);
-          return {};
-        }}
-      >
+      <NavLink to={to} style={navItemStyle}>
         {icon && <Icon name={icon} />}
+        {img && (
+          <img
+            alt={altImg}
+            style={{
+              display: "inline-block",
+              verticalAlign: "middle",
+              margin: "-.3em 0",
+              width: "2.5em",
+            }}
+            src={img}
+          />
+        )}
         {name}
       </NavLink>
     </Menu.Item>
