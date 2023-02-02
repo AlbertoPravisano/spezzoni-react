@@ -14,6 +14,7 @@ const LoginForm = () => {
       )}
       <Form.Input
         fluid
+        autoFocus
         name="usr"
         icon="user"
         iconPosition="left"

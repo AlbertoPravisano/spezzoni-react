@@ -31,6 +31,7 @@ const RegisterForm = () => {
     <Form error={isError} onSubmit={() => setIsError(true)}>
       <Form.Group widths="equal">
         <Form.Input
+          autoFocus
           icon="user"
           iconPosition="left"
           label="Nome"
