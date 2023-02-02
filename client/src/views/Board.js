@@ -2,12 +2,16 @@ import React from "react";
 import { Input, Button, Grid } from "semantic-ui-react";
 
 const Board = () => {
+  const path = process.env.PUBLIC_URL;
+  const image = "/spezzoni/logo.png";
   return (
     <Grid>
       <Grid.Row />
       <Grid.Row />
       <Grid.Row />
-      <Grid.Row centered>Spezzoni (Logo)</Grid.Row>
+      <Grid.Row centered>
+        <img alt="logo" src={path + image} />
+      </Grid.Row>
       <Grid.Row />
       <Grid.Row centered stretched>
         <Grid.Column>

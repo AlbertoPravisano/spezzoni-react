@@ -6,10 +6,12 @@ import { ABACO, HOME } from "../routes";
 import LoginButtonForm from "./login/LoginButtonForm";
 
 const HeaderPage = () => {
+  const path = process.env.PUBLIC_URL;
+  const image = "/spezzoni/icon.png";
   return (
     <Menu>
       <Menu.Item>
-        <Icon name="checkmark" /> Spezzoni
+        <img alt="home" src={path + image} /> Home
       </Menu.Item>
       <NavItem name="Bacheca" to={HOME} />
       <NavItem name="Abaco" to={ABACO} />
