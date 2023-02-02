@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HeaderPage from "./components/HeaderPage";
 import Abaco from "./views/Abaco";
-import Home from "./views/Board";
+import Home from "./views/Home";
 import Signup from "views/Signup";
 import PageNotFound from "./views/PageNotFound";
 import FooterPage from "./components/FooterPage";

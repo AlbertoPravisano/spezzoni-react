@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Button, Grid } from "semantic-ui-react";
 
-const Board = () => {
+const Home = () => {
   const path = process.env.PUBLIC_URL;
   return (
     <Grid>
@@ -42,4 +42,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default Home;
