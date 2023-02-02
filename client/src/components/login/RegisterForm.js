@@ -1,7 +1,11 @@
-import React from 'react';
-import { Form, Checkbox } from 'semantic-ui-react';
+import NavText from "components/NavText";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "routes";
+import { Form, Checkbox, Button } from "semantic-ui-react";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [fields, setFields] = React.useState({});
   const [isError, setIsError] = React.useState(false);
   const options = [
@@ -70,10 +74,14 @@ const RegisterForm = () => {
         control={Checkbox}
         label={
           <label>
-            Accetto i <a href="/">termini e le condizioni</a>
+            Accetto i{" "}
+            <NavText onClick={() => {}}>termini e le condizioni</NavText>
           </label>
         }
       />
+      <Button positive onClick={() => navigate(HOME)}>
+        Registrati
+      </Button>
     </Form>
   );
 };

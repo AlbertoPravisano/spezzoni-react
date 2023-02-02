@@ -4,10 +4,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HeaderPage from "./components/HeaderPage";
 import Abaco from "./views/Abaco";
-import Bacheca from "./views/Board";
+import Home from "./views/Board";
+import Signup from "views/Signup";
 import PageNotFound from "./views/PageNotFound";
 import FooterPage from "./components/FooterPage";
-import { ABACO, HOME, BASE_PATH } from "./routes";
+import { ABACO, HOME, SIGNUP, BASE_PATH } from "./routes";
 
 const App = () => {
   return (
@@ -16,8 +17,9 @@ const App = () => {
         <HeaderPage />
         <Container>
           <Routes>
-            <Route path={HOME} element={<Bacheca />} />
+            <Route path={HOME} element={<Home />} />
             <Route path={ABACO} element={<Abaco />} />
+            <Route path={SIGNUP} element={<Signup />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Container>

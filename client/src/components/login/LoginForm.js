@@ -30,7 +30,11 @@ const LoginForm = () => {
         type="password"
         error={isError}
       />
-      <Form.Checkbox name="save_credentials" label="Ricorda le credenziali" />
+      <Form.Checkbox
+        name="save_credentials"
+        defaultChecked={true}
+        label="Ricorda le credenziali"
+      />
       <br />
       <Button primary type="submit" fluid>
         Login

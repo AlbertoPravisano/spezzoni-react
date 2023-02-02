@@ -1,7 +1,9 @@
+import NavText from "components/NavText";
 import React from "react";
-import { Menu, Icon, Modal, Button, Divider } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
+import { SIGNUP } from "routes";
+import { Menu, Icon, Modal, Divider, Segment } from "semantic-ui-react";
 import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
 
 const LoginButtonForm = ({ position }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -19,19 +21,31 @@ const LoginButtonForm = ({ position }) => {
 export default LoginButtonForm;
 
 const LoginModal = ({ setModalOpen }) => {
+  const navigate = useNavigate();
   return (
-    <Modal closeIcon open dimmer="blurring" onClose={() => setModalOpen(false)}>
+    <Modal
+      closeIcon
+      open
+      dimmer="blurring"
+      size="tiny"
+      onClose={() => setModalOpen(false)}
+    >
       <Modal.Header>Effettua il login...</Modal.Header>
       <Modal.Content>
         <LoginForm />
         <br />
         <Divider horizontal>oppure</Divider>
-        <RegisterForm />
-        <br />
-        <Button positive fluid onClick={() => {}}>
-          Registrati
-        </Button>
-        <br />
+        <Segment basic textAlign="center">
+          Se non hai ancora un account,{" "}
+          <NavText
+            onClick={() => {
+              setModalOpen(false);
+              navigate(SIGNUP);
+            }}
+          >
+            registrati
+          </NavText>
+        </Segment>
       </Modal.Content>
     </Modal>
   );
