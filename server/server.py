@@ -56,34 +56,35 @@ def register():
 # gestione login
 @login_manager.user_loader
 def load_user(user_id):
-return users.get(int(user_id))
+    return users.get(int(user_id))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-form = LoginForm()
-if form.validate_on_submit():
-# verifica utente esistente
-email = form.email.data
-password = form.password.data
-for user in users.values():
-if user.email == email and user.password == password:
-login_user(user)
-return redirect(url_for('index'))
-return 'Invalid email or password'
-return render_template('login.html', form=form)
+    form = LoginForm()
+    if form.validate_on_submit():
+        # verifica utente esistente
+        email = form.email.data
+        password = form.password.data
+        for user in users.values():
+            if user.email == email and user.password == password:
+                login_user(user)
+                return redirect(url_for('index'))
+            return 'Invalid email or password'
+        return render_template('login.html', form=form)
 
-gestione logout
+
+# gestione logout
 @app.route('/logout')
 @login_required
 def logout():
-logout_user()
-return redirect(url_for('login'))
+    logout_user()
+    return redirect(url_for('login'))
 
-pagina principale del social network (accessibile solo agli utenti autenticati)
+# pagina principale del social network (accessibile solo agli utenti autenticati)
 @app.route('/')
 @login_required
 def index():
-return render_template('index.html')
+    return render_template('index.html')
 
 
 
