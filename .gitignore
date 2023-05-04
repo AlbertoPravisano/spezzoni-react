@@ -2,3 +2,5 @@ node_modules
 build
 *.xlsx
 package-lock.json
+server/__pycache__/*
+.env
