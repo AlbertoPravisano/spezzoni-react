@@ -4,13 +4,26 @@ import { StatusCodes } from "http-status-codes";
 const app = express();
 const port = 3000;
 
+const STATUS = {
+  SUCCESS: "OK",
+  FAILURE: "NO",
+};
+
+app.use(express.json());
+
 app.get("/hello", (req, res) => {
   res.send({ body: "Hello world!" });
 });
 
 app.post("/add", (req, res) => {
-  res.status(StatusCodes.CREATED);
-  res.send({ body: "Hello world!" });
+  const data = [];
+  const { body } = req;
+  if (!body.name) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .send({ status: STATUS.FAILURE, error: "Name is required" });
+  }
+  return res.status(StatusCodes.CREATED).send({ status: STATUS.SUCCESS, data });
 });
 
 app.listen(port, () => {
