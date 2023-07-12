@@ -2,8 +2,8 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 
-import mainRoutes from "./main.routes";
-import userRoutes from "./user.routes";
+import mainRoutes from "./routes/main.routes";
+import userRoutes from "./routes/user.routes";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 
