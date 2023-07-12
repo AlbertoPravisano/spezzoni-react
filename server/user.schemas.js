@@ -17,45 +17,32 @@ const MAX_LENGTH = {
   birthday: 10,
 };
 
-export const getIdUserByCredentials = {
+const getSchema = (origin, shape) => ({
   schema: {
-    body: {
-      yupSchema: yup.object().shape({
-        usr: yup.string().required(),
-        psw: yup.string().required(),
-      }),
+    [origin]: {
+      yupSchema: yup.object().shape(shape),
     },
   },
-};
+});
 
-export const getUser = {
-  schema: {
-    params: {
-      yupSchema: yup.object().shape({
-        id: yup.number().required(),
-      }),
-    },
-  },
-};
+export const getIdUserByCredentials = getSchema("body", {
+  usr: yup.string().required(),
+  psw: yup.string().required(),
+});
 
-export const addUser = {
-  schema: {
-    body: {
-      yupSchema: yup.object().shape({
-        name: yup.string().min(MIN_LENGTH.name).max(MAX_LENGTH.name),
-        surname: yup.string().min(MIN_LENGTH.name).max(MAX_LENGTH.name),
-        email: yup.string().email().max(MAX_LENGTH.email),
-        phone: yup.string().min(MIN_LENGTH.phone).max(MAX_LENGTH.phone),
-        city: yup.string().min(MIN_LENGTH.city).max(MAX_LENGTH.city),
-        birthday: yup
-          .string()
-          .min(MIN_LENGTH.birthday)
-          .max(MAX_LENGTH.birthday),
-        password: yup.string(),
-      }),
-    },
-  },
-};
+export const getUser = getSchema("params", {
+  id: yup.number().required(),
+});
+
+export const addUser = getSchema("body", {
+  name: yup.string().min(MIN_LENGTH.name).max(MAX_LENGTH.name),
+  surname: yup.string().min(MIN_LENGTH.name).max(MAX_LENGTH.name),
+  email: yup.string().email().max(MAX_LENGTH.email),
+  phone: yup.string().min(MIN_LENGTH.phone).max(MAX_LENGTH.phone),
+  city: yup.string().min(MIN_LENGTH.city).max(MAX_LENGTH.city),
+  birthday: yup.string().min(MIN_LENGTH.birthday).max(MAX_LENGTH.birthday),
+  password: yup.string(),
+});
 
 export const updateUser = {
   schema: {
@@ -75,12 +62,6 @@ export const updateUser = {
   },
 };
 
-export const removeUser = {
-  schema: {
-    params: {
-      yupSchema: yup.object().shape({
-        id: yup.number().required(),
-      }),
-    },
-  },
-};
+export const removeUser = getSchema("params", {
+  id: yup.number().required(),
+});
