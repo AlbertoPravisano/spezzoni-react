@@ -4,6 +4,9 @@ const get = (userId) => users.find((user) => user.id === userId);
 
 const getAll = () => users;
 
+const getFromCredentials = (usr, psw) =>
+  users.find((user) => user.email === usr && user.phone === psw);
+
 /**
  * Update a user from its ID.
  *
@@ -70,10 +73,4 @@ const remove = (userId) => {
   return users.find(deleteUser);
 };
 
-export default {
-  get,
-  getAll,
-  update,
-  insert,
-  remove,
-};
+export default { getFromCredentials, get, getAll, update, insert, remove };

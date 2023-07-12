@@ -24,14 +24,9 @@ const HeaderPage = () => {
 export default HeaderPage;
 
 const NavItem = ({ to, name, icon, img, altImg }) => {
-  const [active, setActive] = React.useState(false);
-  const navItemStyle = ({ isActive }) => {
-    setActive(isActive);
-    return {};
-  };
   return (
-    <Menu.Item active={active}>
-      <NavLink to={to} style={navItemStyle}>
+    <Menu.Item>
+      <NavLink to={to}>
         {icon && <Icon name={icon} />}
         {img && (
           <img

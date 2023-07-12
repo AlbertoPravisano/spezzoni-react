@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseApiUrl = `${process.env.REACT_APP_COMMON_BASE_URL}${process.env.REACT_APP_USERS_BASE_URL}`;
+const baseApiUrl = `${process.env.REACT_APP_COMMON_BASE_URL}:${process.env.REACT_APP_API_PORT}${process.env.REACT_APP_API_BASE_PATH}${process.env.REACT_APP_USERS_BASE_URL}`;
 
 export const createUser = async (payload) => {
   const createUserEndpoint = `${baseApiUrl}`;
@@ -13,6 +13,14 @@ export const createUser = async (payload) => {
 export const editUser = async (userId, payload) => {
   const editUserEndpoint = `${baseApiUrl}/${userId}`;
   const { data: apiResponse } = await axios.put(editUserEndpoint, payload);
+
+  return apiResponse;
+};
+
+export const getUserIdFromCredentials = async (usr, psw) => {
+  const getUserEndpoint = `${baseApiUrl}/login`;
+  const payload = { usr, psw };
+  const { data: apiResponse } = await axios.post(getUserEndpoint, payload);
 
   return apiResponse;
 };

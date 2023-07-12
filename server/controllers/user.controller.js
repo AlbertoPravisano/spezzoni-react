@@ -10,11 +10,7 @@ const STATUS = {
   failure: false,
 };
 
-/**
- * @param req
- * @param res
- * @returns {*}
- */
+/** Retreive all users */
 const getAllUsers = (req, res) => {
   const users = userService.getAllUsers();
 
@@ -28,13 +24,24 @@ const getAllUsers = (req, res) => {
   });
 };
 
-/**
- * Retrieve a user
- *.
- * @param req
- * @param res
- * @returns {*}
- */
+/** Get userId from credentials if exist */
+const getIdUserByCredentials = (req, res) => {
+  const { usr, psw } = req.body;
+  const user = userService.getUserIdFromCredentials(usr, psw);
+
+  if (user) {
+    logger.info(`Retrieving user ID ${user.id} `);
+
+    return res.status(StatusCodes.OK).send(user);
+  }
+
+  return res.status(StatusCodes.NOT_FOUND).send({
+    status: STATUS.failure,
+    message: `User ${usr} is not found.`,
+  });
+};
+
+/** Retrieve a user */
 const getUser = (req, res) => {
   const id = parseInt(req.params.id, 10);
   const user = userService.getUser(id);
@@ -51,13 +58,7 @@ const getUser = (req, res) => {
   });
 };
 
-/**
- * Add a user.
- *
- * @param req
- * @param res
- * @returns {*}
- */
+/** Add a user */
 const addUser = (req, res) => {
   const { body: user } = req;
 
@@ -71,13 +72,7 @@ const addUser = (req, res) => {
   });
 };
 
-/**
- * Update a user.
- *
- * @param req
- * @param res
- * @returns {*}
- */
+/** Update a user */
 const updateUser = (req, res) => {
   const { body: user } = req;
 
@@ -100,13 +95,7 @@ const updateUser = (req, res) => {
   }
 };
 
-/**
- * Remove a user.
- *
- * @param req
- * @param res
- * @returns {*}
- */
+/** Remove a user */
 const removeUser = (req, res) => {
   const { params } = req;
 
@@ -130,6 +119,7 @@ const removeUser = (req, res) => {
 };
 
 export default {
+  getIdUserByCredentials,
   getAllUsers,
   getUser,
   addUser,

@@ -2,7 +2,13 @@ import express from "express";
 import { expressYupMiddleware } from "express-yup-middleware";
 
 import userController from "../controllers/user.controller";
-import { getUser, addUser, updateUser, removeUser } from "../user.schemas";
+import {
+  getIdUserByCredentials,
+  getUser,
+  addUser,
+  updateUser,
+  removeUser,
+} from "../user.schemas";
 
 const router = express.Router();
 
@@ -14,6 +20,14 @@ router.get(
     schemaValidator: getUser,
   }),
   userController.getUser
+);
+
+router.post(
+  "/login",
+  expressYupMiddleware({
+    schemaValidator: getIdUserByCredentials,
+  }),
+  userController.getIdUserByCredentials
 );
 
 router.post(

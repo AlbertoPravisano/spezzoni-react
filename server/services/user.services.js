@@ -1,6 +1,15 @@
 import userDao from "../models/persistance/user.dao";
 
 /**
+ *
+ * @param {string} usr
+ * @param {string} psw
+ * @returns {T}
+ */
+const getUserIdFromCredentials = (usr, psw) =>
+  userDao.getFromCredentials(usr, psw);
+
+/**
  * Get all users.
  *
  * @returns {[]}
@@ -39,6 +48,7 @@ const addUser = (details) => userDao.insert(details);
 const removeUser = (userId) => userDao.remove(userId);
 
 export default {
+  getUserIdFromCredentials,
   getUser,
   getAllUsers,
   updateUser,

@@ -13,6 +13,17 @@ const MAX_LENGTH = {
   email: 100,
 };
 
+export const getIdUserByCredentials = {
+  schema: {
+    body: {
+      yupSchema: yup.object().shape({
+        usr: yup.string().required(),
+        psw: yup.string().required(),
+      }),
+    },
+  },
+};
+
 export const getUser = {
   schema: {
     params: {
