@@ -11,18 +11,12 @@ const regex = new RegExp(
   "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"
 );
 
-const options = [
-  { key: "m", text: "Uomo", value: "male" },
-  { key: "f", text: "Donna", value: "female" },
-  { key: "o", text: "Altro", value: "other" },
-];
-
 const isFormBenFormata = (
   name,
   surname,
   phone,
   birthday,
-  sex,
+  city,
   email,
   psw,
   psw2
@@ -35,7 +29,7 @@ const RegisterForm = () => {
     surname: "",
     phone: "",
     birthday: "",
-    sex: "",
+    city: "",
     email: "",
     psw: "",
     psw2: "",
@@ -51,10 +45,10 @@ const RegisterForm = () => {
   };
 
   const handleSubmit = () => {
-    const { name, surname, phone, birthday, sex, email, psw, psw2 } = state;
+    const { name, surname, phone, birthday, city, email, psw, psw2 } = state;
 
     if (
-      isFormBenFormata(name, surname, phone, birthday, sex, email, psw, psw2)
+      isFormBenFormata(name, surname, phone, birthday, city, email, psw, psw2)
     ) {
       createUser({ name, email })
         .then((data) => {
@@ -117,12 +111,12 @@ const RegisterForm = () => {
           max={getDataMinimaMaggiorenne()}
           onChange={handleChange}
         />
-        <Form.Select
-          value={state.sex}
-          fluid
-          name="sex"
-          label="Sesso"
-          options={options}
+        <Form.Input
+          name="city"
+          icon="world"
+          iconPosition="left"
+          label="Residenza"
+          placeholder="residenza..."
           onChange={handleChange}
         />
       </Form.Group>
