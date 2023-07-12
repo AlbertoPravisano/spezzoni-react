@@ -21,6 +21,7 @@ const LoginForm = () => {
     KEY_STORAGE_CREDENTIALS,
     { usr: "", psw: "" }
   );
+  console.log(defaultCredentials);
 
   const [state, setState] = React.useState({
     ...defaultCredentials,
@@ -39,10 +40,7 @@ const LoginForm = () => {
     const { usr, psw, saveCredentials } = state;
 
     if (saveCredentials) {
-      setValueToLocalStorage(
-        KEY_STORAGE_CREDENTIALS,
-        JSON.stringify({ usr, psw })
-      );
+      setValueToLocalStorage(KEY_STORAGE_CREDENTIALS, { usr, psw });
     }
 
     if (isFormBenFormata(usr, psw)) {
@@ -50,6 +48,7 @@ const LoginForm = () => {
         .then((data) => {
           console.log("Login effettuato");
           console.log(data);
+          // dispatch(actions.utenteLoggato(data))
         })
         .catch((error) => {
           console.log(error.message);

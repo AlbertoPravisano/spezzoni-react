@@ -17,7 +17,7 @@ export const getValuesFromLocalStorage = (key, defaultValues) => {
 /**
  *
  * @param {string} key
- * @param {string} value
+ * @param {*} value
  * @returns {void}
  */
 export const setValueToLocalStorage = (key, value) =>
