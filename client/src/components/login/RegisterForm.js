@@ -3,41 +3,81 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { HOME } from "routes";
 import { Form, Checkbox, Button } from "semantic-ui-react";
-import { getDataMinimaMaggiorenne, isOverEighteen } from "utils/dates";
+import { getDataMinimaMaggiorenne, isOverEighteen } from "common/dates";
+import { isStringaValorizzata, isValorizzato } from "common/validations";
+import { createUser } from "api/user";
 
 const regex = new RegExp(
   "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"
 );
 
+const options = [
+  { key: "m", text: "Uomo", value: "male" },
+  { key: "f", text: "Donna", value: "female" },
+  { key: "o", text: "Altro", value: "other" },
+];
+
+const isFormBenFormata = (
+  name,
+  surname,
+  phone,
+  birthday,
+  sex,
+  email,
+  psw,
+  psw2
+) => psw === psw2;
+
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const [fields, setFields] = React.useState({});
-  const [isError, setIsError] = React.useState(false);
-  const options = [
-    { key: "m", text: "Uomo", value: "male" },
-    { key: "f", text: "Donna", value: "female" },
-    { key: "o", text: "Altro", value: "other" },
-  ];
+  const [state, setState] = React.useState({
+    name: "",
+    surname: "",
+    phone: "",
+    birthday: "",
+    sex: "",
+    email: "",
+    psw: "",
+    psw2: "",
+    conditions: false,
+  });
 
-  React.useEffect(() => {
-    if (fields.psw !== fields.psw2) {
-      setIsError(true);
-    } else {
-      setIsError(false);
+  const handleChange = (_, data) => {
+    const { name, value, checked } = data;
+    setState({
+      ...state,
+      [name]: isValorizzato(checked) ? checked : value || "",
+    });
+  };
+
+  const handleSubmit = () => {
+    const { name, surname, phone, birthday, sex, email, psw, psw2 } = state;
+
+    if (
+      isFormBenFormata(name, surname, phone, birthday, sex, email, psw, psw2)
+    ) {
+      createUser({ name, email })
+        .then((data) => {
+          console.log(data);
+          navigate(HOME);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     }
-  }, [fields]);
+  };
 
   return (
-    <Form error={isError} onSubmit={() => setIsError(true)}>
+    <Form onSubmit={handleSubmit}>
       <Form.Group widths="equal">
         <Form.Input
           autoFocus
+          name="name"
           icon="user"
           iconPosition="left"
           label="Nome"
           placeholder="nome..."
-          error={isError}
-          onBlur={(e) => setFields({ ...fields, name: e.target.value })}
+          onChange={handleChange}
         />
         <Form.Input
           name="surname"
@@ -45,8 +85,7 @@ const RegisterForm = () => {
           iconPosition="left"
           label="Cognome"
           placeholder="cognome..."
-          error={isError}
-          onBlur={(e) => setFields({ ...fields, surname: e.target.value })}
+          onChange={handleChange}
         />
       </Form.Group>
       <Form.Group widths="equal">
@@ -57,10 +96,10 @@ const RegisterForm = () => {
           iconPosition="left"
           label="Numero di telefono"
           placeholder="+39 333-3333333"
-          error={isError || (fields.phone && !regex.test(fields.phone))}
+          error={isStringaValorizzata(state.phone) && !regex.test(state.phone)}
           onBlur={(e) =>
-            setFields({
-              ...fields,
+            setState({
+              ...state,
               phone: e.target.value.replace("-", "").replace(" ", ""),
             })
           }
@@ -72,41 +111,52 @@ const RegisterForm = () => {
           iconPosition="left"
           label="Data di nascita"
           error={
-            isError || (fields.birthday && !isOverEighteen(fields.birthday))
+            isStringaValorizzata(state.birthday) &&
+            !isOverEighteen(state.birthday)
           }
           max={getDataMinimaMaggiorenne()}
-          onBlur={(e) => setFields({ ...fields, birthday: e.target.value })}
+          onChange={handleChange}
         />
-        <Form.Select fluid name="sex" label="Sesso" options={options} />
+        <Form.Select
+          value={state.sex}
+          fluid
+          name="sex"
+          label="Sesso"
+          options={options}
+          onChange={handleChange}
+        />
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Input
-          icon="user"
+          icon="at"
+          name="email"
           iconPosition="left"
-          label="Username"
-          placeholder="username..."
-          error={isError}
-          onBlur={(e) => setFields({ ...fields, usr: e.target.value })}
+          label="Email"
+          placeholder="xxxx@xxx.xx"
+          onChange={handleChange}
         />
         <Form.Input
           icon="lock"
+          name="psw"
           iconPosition="left"
           label="Password"
           type="password"
-          error={isError}
-          onBlur={(e) => setFields({ ...fields, psw: e.target.value })}
+          onChange={handleChange}
         />
         <Form.Input
+          name="psw2"
           icon="lock"
           iconPosition="left"
           label="Conferma password"
           type="password"
-          error={isError}
-          onBlur={(e) => setFields({ ...fields, psw2: e.target.value })}
+          onChange={handleChange}
         />
       </Form.Group>
       <Form.Field
+        name="conditions"
+        required
         control={Checkbox}
+        onChange={handleChange}
         label={
           <label>
             Accetto i{" "}
@@ -114,7 +164,7 @@ const RegisterForm = () => {
           </label>
         }
       />
-      <Button positive onClick={() => navigate(HOME)}>
+      <Button positive type="submit">
         Registrati
       </Button>
     </Form>

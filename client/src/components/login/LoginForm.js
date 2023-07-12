@@ -21,7 +21,6 @@ const LoginForm = () => {
     KEY_STORAGE_CREDENTIALS,
     { usr: "", psw: "" }
   );
-  console.log(defaultCredentials);
 
   const [state, setState] = React.useState({
     ...defaultCredentials,
