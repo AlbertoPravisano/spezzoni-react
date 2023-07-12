@@ -4,6 +4,8 @@ const MIN_LENGTH = {
   name: 2,
   city: 1,
   country: 2,
+  phone: 6,
+  birthday: 10,
 };
 
 const MAX_LENGTH = {
@@ -11,6 +13,8 @@ const MAX_LENGTH = {
   city: 30,
   country: 30,
   email: 30,
+  phone: 12,
+  birthday: 10,
 };
 
 export const getIdUserByCredentials = {
@@ -41,8 +45,12 @@ export const addUser = {
         name: yup.string().min(MIN_LENGTH.name).max(MAX_LENGTH.name),
         surname: yup.string().min(MIN_LENGTH.name).max(MAX_LENGTH.name),
         email: yup.string().email().max(MAX_LENGTH.email),
+        phone: yup.string().min(MIN_LENGTH.phone).max(MAX_LENGTH.phone),
         city: yup.string().min(MIN_LENGTH.city).max(MAX_LENGTH.city),
-        birthday: yup.date(),
+        birthday: yup
+          .string()
+          .min(MIN_LENGTH.birthday)
+          .max(MAX_LENGTH.birthday),
         password: yup.string(),
       }),
     },

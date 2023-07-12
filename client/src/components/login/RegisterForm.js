@@ -20,7 +20,15 @@ const isFormBenFormata = (
   email,
   psw,
   psw2
-) => psw === psw2;
+) =>
+  isStringaValorizzata(name) &&
+  isStringaValorizzata(surname) &&
+  isStringaValorizzata(phone) &&
+  isStringaValorizzata(birthday) &&
+  isStringaValorizzata(city) &&
+  isStringaValorizzata(email) &&
+  isStringaValorizzata(psw) &&
+  psw === psw2;
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -50,7 +58,7 @@ const RegisterForm = () => {
     if (
       isFormBenFormata(name, surname, phone, birthday, city, email, psw, psw2)
     ) {
-      createUser({ name, email })
+      createUser({ name, surname, phone, birthday, city, email, password: psw })
         .then((data) => {
           console.log(data);
           navigate(HOME);
