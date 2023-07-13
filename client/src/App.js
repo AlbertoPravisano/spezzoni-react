@@ -11,7 +11,8 @@ import Home from "./views/Home";
 import Signup from "views/Signup";
 import PageNotFound from "./views/PageNotFound";
 import FooterPage from "./components/FooterPage";
-import { ABACO, HOME, SIGNUP, BASE_PATH } from "./routes";
+import { ABACO, HOME, SIGNUP, BASE_PATH, DASHBOARD } from "./routes";
+import Dashboard from "views/Dashboard";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path={HOME} element={<Home />} />
             <Route path={ABACO} element={<Abaco />} />
             <Route path={SIGNUP} element={<Signup />} />
+            <Route path={DASHBOARD} element={<Dashboard />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Container>
