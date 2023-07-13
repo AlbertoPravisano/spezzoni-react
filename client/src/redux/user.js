@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { user: undefined };
+const initialState = { data: undefined };
 
 export const userSlice = createSlice({
   name: "user",
@@ -9,10 +9,10 @@ export const userSlice = createSlice({
     userLoggedIn: (state, action) => {
       const user = action.payload;
       // API call to products
-      state.user = user;
+      state.data = user;
     },
     userLoggedOut: (state) => {
-      state.user = undefined;
+      state.data = undefined;
     },
   },
 });

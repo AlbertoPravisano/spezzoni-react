@@ -26,7 +26,7 @@ const HeaderPage = ({ user }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.user };
+  return { user: state.user.data };
 };
 
 export default connect(mapStateToProps)(HeaderPage);
