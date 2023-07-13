@@ -5,12 +5,12 @@ import { SIGNUP } from "routes";
 import { Menu, Icon, Modal, Divider, Segment } from "semantic-ui-react";
 import LoginForm from "./LoginForm";
 
-const LoginButtonForm = ({ position }) => {
+const LoginButtonForm = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   return (
     <React.Fragment>
-      <Menu.Item position={position} onClick={() => setModalOpen(true)}>
+      <Menu.Item onClick={() => setModalOpen(true)}>
         <Icon name="user" /> Login
       </Menu.Item>
       {modalOpen && <LoginModal setModalOpen={setModalOpen} />}

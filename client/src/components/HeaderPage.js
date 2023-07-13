@@ -1,11 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Icon } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 import { ABACO, HOME } from "../routes";
 import LoginButtonForm from "./login/LoginButtonForm";
+import LoggedUserButtonDropdown from "./LoggedUserButtonDropdown";
 
-const HeaderPage = () => {
+const HeaderPage = ({ user }) => {
+  console.log(user);
   const path = process.env.PUBLIC_URL;
   return (
     <Menu>
@@ -16,12 +19,18 @@ const HeaderPage = () => {
         img={`${path}/spezzoni/icon.png`}
       />
       <NavItem name="Abaco" to={ABACO} />
-      <LoginButtonForm position="right" />
+      <Menu.Menu position="right">
+        {user ? <LoggedUserButtonDropdown user={user} /> : <LoginButtonForm />}
+      </Menu.Menu>
     </Menu>
   );
 };
 
-export default HeaderPage;
+const mapStateToProps = (state) => {
+  return { user: state.user };
+};
+
+export default connect(mapStateToProps)(HeaderPage);
 
 const NavItem = ({ to, name, icon, img, altImg }) => {
   return (

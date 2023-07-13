@@ -1,8 +1,10 @@
 import NavText from "components/NavText";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { HOME } from "routes";
 import { Form, Checkbox, Button } from "semantic-ui-react";
+
+import { HOME } from "routes";
+
 import { getDataMinimaMaggiorenne, isOverEighteen } from "common/dates";
 import { isStringaValorizzata, isValorizzato } from "common/validations";
 import { createUser } from "api/user";
@@ -60,7 +62,6 @@ const RegisterForm = () => {
     ) {
       createUser({ name, surname, phone, birthday, city, email, password: psw })
         .then((data) => {
-          console.log(data);
           navigate(HOME);
         })
         .catch((error) => {

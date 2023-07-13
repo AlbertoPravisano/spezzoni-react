@@ -7,6 +7,10 @@ import {
   setValueToLocalStorage,
 } from "api/localStorage";
 import { getUserIdFromCredentials } from "api/user";
+import { useDispatch } from "react-redux";
+import { userLoggedIn } from "redux/user";
+import { useNavigate } from "react-router-dom";
+import { HOME } from "routes";
 
 const NAME_USER = "usr";
 const NAME_PSW = "psw";
@@ -17,6 +21,8 @@ const isFormBenFormata = (usr, psw) =>
   usr && usr.length > 0 && psw && psw.length > 0;
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const defaultCredentials = getValuesFromLocalStorage(
     KEY_STORAGE_CREDENTIALS,
     { usr: "", psw: "" }
@@ -46,8 +52,8 @@ const LoginForm = () => {
       getUserIdFromCredentials(usr, psw)
         .then((data) => {
           console.log("Login effettuato");
-          console.log(data);
-          // dispatch(actions.utenteLoggato(data))
+          dispatch(userLoggedIn(data));
+          navigate(HOME);
         })
         .catch((error) => {
           console.log(error.message);

@@ -1,6 +1,9 @@
 import React from "react";
 import { Container } from "semantic-ui-react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+
+import { store } from "./redux/store";
 
 import HeaderPage from "./components/HeaderPage";
 import Abaco from "./views/Abaco";
@@ -12,7 +15,7 @@ import { ABACO, HOME, SIGNUP, BASE_PATH } from "./routes";
 
 const App = () => {
   return (
-    <React.Fragment>
+    <Provider store={store}>
       <BrowserRouter basename={BASE_PATH}>
         <HeaderPage />
         <Container>
@@ -25,7 +28,7 @@ const App = () => {
         </Container>
         <FooterPage />
       </BrowserRouter>
-    </React.Fragment>
+    </Provider>
   );
 };
 
