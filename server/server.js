@@ -1,11 +1,12 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
+import compression from "compression";
 
 import mainRoutes from "./routes/main.routes";
 import userRoutes from "./routes/user.routes";
-import rateLimit from "express-rate-limit";
-import compression from "compression";
+import productsRoutes from "./routes/products.routes";
 
 const app = express();
 const port = 4000;
@@ -29,6 +30,7 @@ app.use(cors());
 
 app.use("/v1", mainRoutes);
 app.use("/v1/user", userRoutes);
+app.use("/v1/products", productsRoutes);
 
 app.listen(port, () => {
   console.log(`Server started on http://localhost:${port}`);
