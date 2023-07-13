@@ -5,10 +5,9 @@ import { connect } from "react-redux";
 
 import { ABACO, HOME } from "../routes";
 import LoginButtonForm from "./login/LoginButtonForm";
-import LoggedUserButtonDropdown from "./LoggedUserButtonDropdown";
+import LoggedUserButtonDropdown from "./login/LoggedUserButtonDropdown";
 
 const HeaderPage = ({ user }) => {
-  console.log(user);
   const path = process.env.PUBLIC_URL;
   return (
     <Menu>
