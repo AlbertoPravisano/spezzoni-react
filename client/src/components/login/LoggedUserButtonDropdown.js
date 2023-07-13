@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Dropdown, Icon } from "semantic-ui-react";
+import { Dropdown, Icon, Confirm } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { userLoggedOut } from "redux/user";
 import { useNavigate } from "react-router-dom";
@@ -9,25 +9,38 @@ import { DASHBOARD, HOME } from "routes";
 const LoggedUserButtonDropdown = ({ user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = React.useState(false);
+
   return (
-    <Dropdown item text={user.name}>
-      <Dropdown.Menu>
-        <Dropdown.Item onClick={() => navigate(DASHBOARD)}>
-          <Icon name="user" />
-          Vai al tuo profilo
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item
-          onClick={() => {
-            dispatch(userLoggedOut());
-            navigate(HOME);
-          }}
-        >
-          <Icon name="log out" />
-          Disconnetti...
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+    <React.Fragment>
+      <Dropdown item text={user.name}>
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => navigate(DASHBOARD)}>
+            <Icon name="user" />
+            Vai al tuo profilo
+          </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item onClick={() => setModalOpen(true)}>
+            <Icon name="log out" />
+            Disconnetti...
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <Confirm
+        open={modalOpen}
+        header="Conferma logout"
+        content="Sei sicuro di volerti disconnettere?"
+        cancelButton="Annulla"
+        confirmButton="Disconnetti"
+        size="tiny"
+        onCancel={() => setModalOpen(false)}
+        onConfirm={() => {
+          setModalOpen(false);
+          dispatch(userLoggedOut());
+          navigate(HOME);
+        }}
+      />
+    </React.Fragment>
   );
 };
 
