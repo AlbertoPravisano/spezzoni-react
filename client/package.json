@@ -21,8 +21,13 @@
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4"
   },
+  "overrides": {
+    "react-scripts": {
+      "@svgr/webpack" : "8.1.0"
+    }
+  },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
