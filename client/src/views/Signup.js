@@ -1,6 +1,6 @@
-import RegisterForm from "components/login/RegisterForm";
 import React from "react";
 import { Header, Icon } from "semantic-ui-react";
+import RegisterForm from "components/login/RegisterForm";
 
 const Signup = () => {
   return (
