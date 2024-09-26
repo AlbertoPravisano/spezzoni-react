@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Dropdown, Icon, Confirm } from "semantic-ui-react";
-import { useDispatch } from "react-redux";
-import { userLoggedOut } from "redux/user";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { userLoggedOut } from "../../redux/user";
+
 import { DASHBOARD, HOME } from "routes";
 
 const LoggedUserButtonDropdown = ({ user }) => {

@@ -1,39 +1,37 @@
-import NavText from "components/NavText";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Checkbox, Button } from "semantic-ui-react";
 
 import { HOME } from "routes";
-
+import NavText from "components/NavText";
 import { getDataMinimaMaggiorenne, isOverEighteen } from "common/dates";
 import { isStringaValorizzata, isValorizzato } from "common/validations";
-import { createUser } from "api/user";
+import { userRegistered } from "../../redux/user";
 
-const regex = new RegExp(
+const phoneRegex = new RegExp(
   "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"
 );
 
-const isFormBenFormata = (
-  name,
-  surname,
-  phone,
-  birthday,
-  city,
-  email,
-  psw,
-  psw2
-) =>
-  isStringaValorizzata(name) &&
-  isStringaValorizzata(surname) &&
-  isStringaValorizzata(phone) &&
-  isStringaValorizzata(birthday) &&
-  isStringaValorizzata(city) &&
-  isStringaValorizzata(email) &&
-  isStringaValorizzata(psw) &&
-  psw === psw2;
+const isFormBenFormata = (state) => {
+  const { name, surname, phone, city, email, psw, psw2, conditions } = state;
+  return (
+    isStringaValorizzata(name) &&
+    isStringaValorizzata(surname) &&
+    isStringaValorizzata(phone) &&
+    isStringaValorizzata(city) &&
+    isStringaValorizzata(email) &&
+    isStringaValorizzata(psw) &&
+    psw === psw2 &&
+    psw.length >= 6 &&
+    conditions === true
+  );
+};
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isInError, setIsInError] = React.useState(false);
   const [state, setState] = React.useState({
     name: "",
     surname: "",
@@ -52,31 +50,27 @@ const RegisterForm = () => {
       ...state,
       [name]: isValorizzato(checked) ? checked : value || "",
     });
+    isInError && setIsInError(false);
   };
 
   const handleSubmit = () => {
-    const { name, surname, phone, birthday, city, email, psw, psw2 } = state;
-
-    if (
-      isFormBenFormata(name, surname, phone, birthday, city, email, psw, psw2)
-    ) {
-      createUser({ name, surname, phone, birthday, city, email, password: psw })
-        .then((data) => {
-          navigate(HOME);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+    if (isFormBenFormata(state)) {
+      const { email, psw } = state;
+      dispatch(userRegistered({ email, password: psw }));
+      navigate(HOME);
+    } else {
+      setIsInError(true);
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form error={isInError} onSubmit={handleSubmit}>
       <Form.Group widths="equal">
         <Form.Input
           autoFocus
           name="name"
           icon="user"
+          error={isInError}
           iconPosition="left"
           label="Nome"
           placeholder="nome..."
@@ -85,6 +79,7 @@ const RegisterForm = () => {
         <Form.Input
           name="surname"
           icon="user"
+          error={isInError}
           iconPosition="left"
           label="Cognome"
           placeholder="cognome..."
@@ -99,7 +94,10 @@ const RegisterForm = () => {
           iconPosition="left"
           label="Numero di telefono"
           placeholder="+39 333-3333333"
-          error={isStringaValorizzata(state.phone) && !regex.test(state.phone)}
+          error={
+            isInError ||
+            (isStringaValorizzata(state.phone) && !phoneRegex.test(state.phone))
+          }
           onBlur={(e) =>
             setState({
               ...state,
@@ -114,8 +112,9 @@ const RegisterForm = () => {
           iconPosition="left"
           label="Data di nascita"
           error={
-            isStringaValorizzata(state.birthday) &&
-            !isOverEighteen(state.birthday)
+            isInError ||
+            (isStringaValorizzata(state.birthday) &&
+              !isOverEighteen(state.birthday))
           }
           max={getDataMinimaMaggiorenne()}
           onChange={handleChange}
@@ -134,6 +133,7 @@ const RegisterForm = () => {
           icon="at"
           name="email"
           iconPosition="left"
+          error={isInError}
           label="Email"
           placeholder="xxxx@xxx.xx"
           onChange={handleChange}
@@ -142,6 +142,7 @@ const RegisterForm = () => {
           icon="lock"
           name="psw"
           iconPosition="left"
+          error={isInError}
           label="Password"
           type="password"
           onChange={handleChange}
@@ -150,6 +151,7 @@ const RegisterForm = () => {
           name="psw2"
           icon="lock"
           iconPosition="left"
+          error={isInError}
           label="Conferma password"
           type="password"
           onChange={handleChange}
@@ -158,6 +160,7 @@ const RegisterForm = () => {
       <Form.Field
         name="conditions"
         required
+        error={isInError}
         control={Checkbox}
         onChange={handleChange}
         label={

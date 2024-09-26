@@ -1,47 +1,33 @@
-import axios from "axios";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "./firebase";
 
-const baseApiUrl = `${process.env.REACT_APP_COMMON_BASE_URL}:${process.env.REACT_APP_API_PORT}${process.env.REACT_APP_API_BASE_PATH}${process.env.REACT_APP_USERS_BASE_URL}`;
-
-export const createUser = async (payload) => {
-  const createUserEndpoint = `${baseApiUrl}`;
-
-  const { data: apiResponse } = await axios.post(createUserEndpoint, payload);
-
-  return apiResponse;
+export const setAuthUser = async (email, password, ...otherFields) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (err) {
+    console.log(err.code);
+    console.log(err.message);
+  }
 };
 
-export const editUser = async (userId, payload) => {
-  const editUserEndpoint = `${baseApiUrl}/${userId}`;
-  const { data: apiResponse } = await axios.put(editUserEndpoint, payload);
-
-  return apiResponse;
-};
-
-export const getUserIdFromCredentials = async (usr, psw) => {
-  const getUserEndpoint = `${baseApiUrl}/login`;
-  const payload = { usr, psw };
-  const { data: apiResponse } = await axios.post(getUserEndpoint, payload);
-
-  return apiResponse;
-};
-
-export const retrieveUser = async (userId) => {
-  const getUserEndpoint = `${baseApiUrl}/${userId}`;
-  const { data: apiResponse } = await axios.get(getUserEndpoint);
-
-  return apiResponse;
-};
-
-export const retrieveAllUsers = async () => {
-  const getAllUsersEndpoint = `${baseApiUrl}/all`;
-  const { data: apiResponse } = await axios.get(getAllUsersEndpoint);
-
-  return apiResponse;
-};
-
-export const removeUser = async (userId) => {
-  const removeUserEndpoint = `${baseApiUrl}/${userId}`;
-  const { data: apiResponse } = await axios.delete(removeUserEndpoint);
-
-  return apiResponse;
+export const getAuthUser = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return userCredential.user;
+  } catch (err) {
+    console.log(err.code);
+    console.log(err.message);
+  }
 };

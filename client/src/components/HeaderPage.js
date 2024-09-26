@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Menu, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 
-import { ABACO, HOME } from "../routes";
+import { HOME } from "../routes";
 import LoginButtonForm from "./login/LoginButtonForm";
 import LoggedUserButtonDropdown from "./login/LoggedUserButtonDropdown";
 
@@ -24,9 +24,9 @@ const HeaderPage = ({ user }) => {
         />
         Home
       </Menu.Item>
-      <Menu.Item as={NavLink} to={ABACO}>
+      {/* <Menu.Item as={NavLink} to={ABACO}>
         Abaco
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Menu position="right">
         {user ? <LoggedUserButtonDropdown user={user} /> : <LoginButtonForm />}
       </Menu.Menu>
