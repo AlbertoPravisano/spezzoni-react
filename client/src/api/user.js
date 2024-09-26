@@ -13,8 +13,7 @@ export const setAuthUser = async (email, password, ...otherFields) => {
     );
     return userCredential.user;
   } catch (err) {
-    console.log(err.code);
-    console.log(err.message);
+    throw new Error(err);
   }
 };
 
@@ -27,7 +26,6 @@ export const getAuthUser = async (email, password) => {
     );
     return userCredential.user;
   } catch (err) {
-    console.log(err.code);
-    console.log(err.message);
+    throw new Error(err);
   }
 };

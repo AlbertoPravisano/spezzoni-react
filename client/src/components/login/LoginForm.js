@@ -34,7 +34,7 @@ const LoginForm = () => {
 
     if (isFormBenFormata(usr, psw)) {
       console.log("Login effettuato");
-      dispatch(userLoggedIn(usr, psw));
+      dispatch(userLoggedIn({ email: usr, password: psw }));
       navigate(HOME);
     }
   };

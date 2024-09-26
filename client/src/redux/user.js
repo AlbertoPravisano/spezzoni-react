@@ -28,7 +28,7 @@ export const userSlice = createSlice({
       }
     ),
     userLoggedIn: create.asyncThunk(
-      async (email, password) => await userApi.getAuthUser(email, password),
+      async ({ email, password }) => await userApi.getAuthUser(email, password),
       {
         pending: (state) => {
           state.loading = true;
