@@ -78,15 +78,44 @@ export const productSlice = createSlice({
         },
       }
     ),
-    setProductSelled: (products, action) => {
-      const productId = action.payload;
-      const product = products.find((product) => product.id !== productId);
-      product.selled = true;
-    },
-    deleteProduct: (products, action) => {
-      const productId = action.payload;
-      products = products.filter((product) => product.id !== productId);
-    },
+    setProductSelled: create.asyncThunk(
+      async (spezzoneId) => await spezzoniApi.setSpezzoneSelled(spezzoneId),
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.error = undefined;
+          state.data?.map((spezzone) =>
+            spezzone.id === action.meta.arg
+              ? { ...spezzone, aviable: false }
+              : spezzone
+          );
+        },
+      }
+    ),
+    deleteProduct: create.asyncThunk(
+      async (spezzoneId) => await spezzoniApi.deleteSpezzone(spezzoneId),
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.error = undefined;
+          state.data?.filter((spezzone) => spezzone.id !== action.meta.arg);
+        },
+      }
+    ),
   }),
 });
 
@@ -97,6 +126,7 @@ export const {
   getSpezzoniByString,
   addProduct,
   deleteProduct,
+  setProductSelled,
 } = productSlice.actions;
 
 export default productSlice.reducer;

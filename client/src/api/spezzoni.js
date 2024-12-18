@@ -1,10 +1,17 @@
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 export const getAllSpezzoni = async () => {
-  const spezzoniRef = collection(db, "spezzoni");
-
-  const snapshot = await getDocs(spezzoniRef);
+  const snapshot = await getDocs(collection(db, "spezzoni"));
   const spezzoni = snapshot.docs.map((doc) => doc.data());
 
   return spezzoni;
@@ -12,9 +19,8 @@ export const getAllSpezzoni = async () => {
 
 export const getUserSpezzoni = async (userId) => {
   try {
-    const spezzoniRef = collection(db, "spezzoni");
     const querySnapshot = await getDocs(
-      query(spezzoniRef, where("userId", "==", userId))
+      query(collection(db, "spezzoni"), where("userId", "==", userId))
     );
 
     const spezzoniList = [];
@@ -31,8 +37,10 @@ export const getUserSpezzoni = async (userId) => {
 
 export const getSpezzoniByName = async (searchString) => {
   try {
-    const spezzoniRef = collection(db, "spezzoni");
-    const q = query(spezzoniRef, where("name", "==", searchString));
+    const q = query(
+      collection(db, "spezzoni"),
+      where("name", "==", searchString)
+    );
     const querySnapshot = await getDocs(q);
 
     const spezzoniList = [];
@@ -49,8 +57,7 @@ export const getSpezzoniByName = async (searchString) => {
 
 export const addSpezzone = async ({ name, userId, quantity }) => {
   try {
-    const spezzoniRef = collection(db, "spezzoni");
-    const docRef = await addDoc(spezzoniRef, {
+    const docRef = await addDoc(collection(db, "spezzoni"), {
       name,
       userId,
       quantity,
@@ -60,5 +67,23 @@ export const addSpezzone = async ({ name, userId, quantity }) => {
   } catch (error) {
     console.error("Error adding spezzoni:", error);
     return null; // Return null on error
+  }
+};
+
+export const deleteSpezzone = async (spezzoneId) => {
+  try {
+    await deleteDoc(doc(db, "spezzoni", spezzoneId));
+    console.log("Document with ID: ", spezzoneId, " deleted successfully");
+  } catch (error) {
+    console.error("Error removing spezzoni:", error);
+  }
+};
+
+export const setSpezzoneSelled = async (spezzoniId) => {
+  try {
+    await updateDoc(doc(db, "spezzoni", spezzoniId), { aviable: false });
+    console.log("Document with ID: ", spezzoniId, " updated successfully");
+  } catch (error) {
+    console.error("Error updating spezzoni:", error);
   }
 };
