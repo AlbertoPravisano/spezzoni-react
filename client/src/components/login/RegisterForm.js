@@ -55,8 +55,7 @@ const RegisterForm = () => {
 
   const handleSubmit = () => {
     if (isFormBenFormata(state)) {
-      const { email, psw } = state;
-      dispatch(userRegistered({ email, password: psw }));
+      dispatch(userRegistered(state));
       navigate(HOME);
     } else {
       setIsInError(true);

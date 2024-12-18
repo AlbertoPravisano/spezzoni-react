@@ -11,7 +11,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: (create) => ({
     userRegistered: create.asyncThunk(
-      async ({ email, password }) => await userApi.setAuthUser(email, password),
+      async (form) => await userApi.register(form),
       {
         pending: (state) => {
           state.loading = true;
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
       }
     ),
     userLoggedIn: create.asyncThunk(
-      async ({ email, password }) => await userApi.getAuthUser(email, password),
+      async ({ email, password }) => await userApi.signin(email, password),
       {
         pending: (state) => {
           state.loading = true;

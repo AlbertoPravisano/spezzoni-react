@@ -33,7 +33,6 @@ const LoginForm = () => {
     const { usr, psw } = state;
 
     if (isFormBenFormata(usr, psw)) {
-      console.log("Login effettuato");
       dispatch(userLoggedIn({ email: usr, password: psw }));
       navigate(HOME);
     }

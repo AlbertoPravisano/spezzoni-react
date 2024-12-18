@@ -11,6 +11,6 @@
   "author": "albertopravisano",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^10.10.0"
+    "firebase": "^11.1.0"
   }
 }

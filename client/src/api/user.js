@@ -1,36 +1,48 @@
 import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendSignInLinkToEmail,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import * as firebaseAuth from "firebase/auth";
 import { db, auth } from "./firebase";
 
-export const handleAuth = async (email, password, ...otherFields) => {
+export const register = async ({ email, psw, ...otherFields }) => {
   try {
-    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    const { user } = await firebaseAuth.createUserWithEmailAndPassword(
+      auth,
+      email,
+      psw
+    );
+    const userRef = doc(db, "/users", user.uid);
+    const data = {
+      email,
+      name: otherFields.name,
+      surname: otherFields.surname,
+      phone: otherFields.phone,
+      birthday: otherFields.birthday,
+      city: otherFields.city,
+    };
+    console.log("register auth: ", user, data);
+    await setDoc(userRef, data);
+    return data;
+  } catch (error) {
+    console.error("Error creating user:", error);
+  }
+};
+
+export const signin = async (email, password) => {
+  try {
+    const { user } = await firebaseAuth.signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log("auth.user", user);
     const userRef = doc(db, "/users", user.uid);
     const userSnap = await getDoc(userRef);
+    console.log("user: ", userSnap.data());
     return userSnap.data();
   } catch (error) {
     if (error.code === "auth/user-not-found") {
-      try {
-        const { user } = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const userRef = doc(db, "/users", user.uid);
-        await setDoc(userRef, { email, ...otherFields });
-        return user;
-      } catch (error) {
-        console.error("Error creating user:", error);
-        // Handle errors appropriately
-      }
+      console.error("Error user not found:", error);
     } else {
       console.error("Error signing in:", error);
-      // Handle errors appropriately
     }
   }
 };
@@ -48,25 +60,23 @@ export const updateUserData = async (user) => {
 
 export async function resetEmail(email) {
   try {
-    await sendSignInLinkToEmail(auth, email, {
-      url: "http://your-app-url.com", // Replace with your app's URL
+    await firebaseAuth.sendSignInLinkToEmail(auth, email, {
+      url: "http://spezzoni.com",
       handleCodeInApp: true,
     });
     console.log("Email sent for email reset.");
-    // You might want to display a message to the user
   } catch (error) {
     console.error("Error sending email reset link:", error);
-    // Handle errors appropriately
   }
 }
 
 export async function resetPassword(email) {
   try {
-    await sendPasswordResetEmail(auth, email);
+    await firebaseAuth.sendPasswordResetEmail(auth, email);
     console.log("Email sent for password reset.");
-    // You might want to display a message to the user
   } catch (error) {
     console.error("Error sending password reset link:", error);
-    // Handle errors appropriately
   }
 }
+
+export const signout = async () => await firebaseAuth.signOut(auth);

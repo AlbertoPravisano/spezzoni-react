@@ -34,6 +34,6 @@ const Dashboard = ({ user }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = (state) => ({ user: state.user.data });
 
 export default connect(mapStateToProps)(Dashboard);

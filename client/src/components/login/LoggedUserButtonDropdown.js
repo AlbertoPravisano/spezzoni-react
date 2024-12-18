@@ -48,7 +48,6 @@ const LoggedUserButtonDropdown = ({ user }) => {
 
 LoggedUserButtonDropdown.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     surname: PropTypes.string,
     city: PropTypes.string,
