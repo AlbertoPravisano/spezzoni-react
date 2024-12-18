@@ -1,7 +1,15 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { getUserSpezzoni } from "../redux/spezzoni";
-import { Grid, Header, Icon, Input } from "semantic-ui-react";
+import {
+  Divider,
+  Grid,
+  Header,
+  Icon,
+  Input,
+  Label,
+  List,
+} from "semantic-ui-react";
 
 const Dashboard = ({ user, spezzoni }) => {
   const dispatch = useDispatch();
@@ -37,7 +45,28 @@ const Dashboard = ({ user, spezzoni }) => {
             <Input value={user.email} fluid />
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row stretched>{JSON.stringify(spezzoni)}</Grid.Row>
+        <Header as="h2">
+          <Icon name="cart" />
+          <Header.Content>Spezzoni</Header.Content>
+        </Header>
+        {spezzoni && (
+          <Grid.Row stretched>
+            <Divider horizontal />
+            <List as="ul">
+              {spezzoni.map((spezzone) => (
+                <List.Item key={spezzone.id} as="li">
+                  {spezzone.name} x({spezzone.quantity}){" "}
+                  <Label
+                    title={spezzone.aviable ? "Disponibile" : "Non disponibile"}
+                    color={spezzone.aviable ? "green" : "red"}
+                    circular
+                    empty
+                  />
+                </List.Item>
+              ))}
+            </List>
+          </Grid.Row>
+        )}
       </Grid>
     </div>
   );
