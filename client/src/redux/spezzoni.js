@@ -10,7 +10,7 @@ export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: (create) => ({
-    userRegistered: create.asyncThunk(
+    getAllSpezzoni: create.asyncThunk(
       async () => await spezzoniApi.getAllSpezzoni(),
       {
         pending: (state) => {
@@ -27,20 +27,57 @@ export const productSlice = createSlice({
         },
       }
     ),
-    retreiveUserProducts: (products, action) => {
-      const userId = action.payload;
-      console.log(userId);
-      products = [];
-    },
-    retreiveProductsByString: (products, action) => {
-      const string = action.payload;
-      console.log(string);
-      products = [];
-    },
-    addProduct: (products, action) => {
-      const product = action.payload;
-      products.push(product);
-    },
+    getUserSpezzoni: create.asyncThunk(
+      async (userId) => await spezzoniApi.getUserSpezzoni(userId),
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.error = undefined;
+          state.data = action.meta.arg;
+        },
+      }
+    ),
+    getSpezzoniByString: create.asyncThunk(
+      async (filter) => await spezzoniApi.getSpezzoniByName(filter),
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.error = undefined;
+          state.data = action.payload;
+        },
+      }
+    ),
+    addProduct: create.asyncThunk(
+      async (spezzone) => await spezzoniApi.addSpezzone(spezzone),
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.error.message;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.error = undefined;
+          state.data.push(action.payload);
+        },
+      }
+    ),
     setProductSelled: (products, action) => {
       const productId = action.payload;
       const product = products.find((product) => product.id !== productId);
@@ -55,8 +92,9 @@ export const productSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  retreiveUserProducts,
-  retreiveProductsByString,
+  getAllSpezzoni,
+  getUserSpezzoni,
+  getSpezzoniByString,
   addProduct,
   deleteProduct,
 } = productSlice.actions;

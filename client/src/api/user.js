@@ -17,6 +17,7 @@ export const register = async ({ email, psw, ...otherFields }) => {
       phone: otherFields.phone,
       birthday: otherFields.birthday,
       city: otherFields.city,
+      uid: user.uid,
     };
     console.log("register auth: ", user, data);
     await setDoc(userRef, data);
@@ -36,8 +37,7 @@ export const signin = async (email, password) => {
     console.log("auth.user", user);
     const userRef = doc(db, "/users", user.uid);
     const userSnap = await getDoc(userRef);
-    console.log("user: ", userSnap.data());
-    return userSnap.data();
+    return { ...userSnap.data(), uid: user.uid };
   } catch (error) {
     if (error.code === "auth/user-not-found") {
       console.error("Error user not found:", error);
