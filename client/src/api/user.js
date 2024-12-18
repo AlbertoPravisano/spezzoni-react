@@ -19,7 +19,6 @@ export const register = async ({ email, psw, ...otherFields }) => {
       city: otherFields.city,
       uid: user.uid,
     };
-    console.log("register auth: ", user, data);
     await setDoc(userRef, data);
     return data;
   } catch (error) {
@@ -34,7 +33,6 @@ export const signin = async (email, password) => {
       email,
       password
     );
-    console.log("auth.user", user);
     const userRef = doc(db, "/users", user.uid);
     const userSnap = await getDoc(userRef);
     return { ...userSnap.data(), uid: user.uid };

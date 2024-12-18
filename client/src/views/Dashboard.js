@@ -1,8 +1,16 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { getUserSpezzoni } from "../redux/spezzoni";
 import { Grid, Header, Icon, Input } from "semantic-ui-react";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, spezzoni }) => {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (!spezzoni) {
+      dispatch(getUserSpezzoni(user.uid));
+    }
+  }, [dispatch, spezzoni, user.uid]);
+
   return (
     <div>
       <Header as="h2">
@@ -29,11 +37,15 @@ const Dashboard = ({ user }) => {
             <Input value={user.email} fluid />
           </Grid.Column>
         </Grid.Row>
+        <Grid.Row stretched>{JSON.stringify(spezzoni)}</Grid.Row>
       </Grid>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({ user: state.user.data });
+const mapStateToProps = (state) => ({
+  user: state.user.data,
+  spezzoni: state.spezzoni.data,
+});
 
 export default connect(mapStateToProps)(Dashboard);

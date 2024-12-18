@@ -6,8 +6,8 @@ const createSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
 });
 
-export const productSlice = createSlice({
-  name: "products",
+export const spezzoniSlice = createSlice({
+  name: "spezzoni",
   initialState,
   reducers: (create) => ({
     getAllSpezzoni: create.asyncThunk(
@@ -40,7 +40,7 @@ export const productSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data = action.meta.arg;
+          state.data = action.payload;
         },
       }
     ),
@@ -127,6 +127,6 @@ export const {
   addProduct,
   deleteProduct,
   setProductSelled,
-} = productSlice.actions;
+} = spezzoniSlice.actions;
 
-export default productSlice.reducer;
+export default spezzoniSlice.reducer;
