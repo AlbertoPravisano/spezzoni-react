@@ -32,6 +32,10 @@ const Home = () => {
             icon="search"
             iconPosition="left"
             placeholder="Digita qui quello che vuoi cercare o offrire..."
+            onKeyDown={(e) =>
+              e.key === "Enter" &&
+              navigate(`${ELENCO}?s=${encodeURIComponent(filterString)}`)
+            }
             onChange={(e) => setFilterString(e.target.value)}
           />
         </Grid.Column>

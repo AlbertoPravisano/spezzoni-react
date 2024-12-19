@@ -31,30 +31,25 @@ export const getUserSpezzoni = async (userId) => {
     return spezzoniList;
   } catch (error) {
     console.error("Error getting spezzoni by userId:", error);
-    return []; // Return an empty array on error
+    return [];
   }
 };
 
 export const getSpezzoniByName = async (searchString) => {
   try {
-    const q =
-      searchString === ""
-        ? collection(db, "spezzoni")
-        : query(
-            collection(db, "spezzoni"),
-            where("name", "==", searchString.toLowerCase())
-          );
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getDocs(collection(db, "spezzoni"));
 
     const spezzoniList = [];
     querySnapshot.forEach((doc) => {
-      spezzoniList.push({ id: doc.id, ...doc.data() });
+      const spezzone = doc.data();
+      if (spezzone.name.toLowerCase().includes(searchString.toLowerCase()))
+        spezzoniList.push({ id: doc.id, ...spezzone });
     });
 
     return spezzoniList;
   } catch (error) {
     console.error("Error getting spezzoni by name substring:", error);
-    return []; // Return an empty array on error
+    return [];
   }
 };
 
@@ -69,14 +64,13 @@ export const addSpezzone = async ({ name, userId, quantity }) => {
     return { name, userId, quantity, aviable: true, id: docRef.id };
   } catch (error) {
     console.error("Error adding spezzoni:", error);
-    return null; // Return null on error
+    return null;
   }
 };
 
 export const deleteSpezzone = async (spezzoneId) => {
   try {
     await deleteDoc(doc(db, "spezzoni", spezzoneId));
-    console.log("Document with ID: ", spezzoneId, " deleted successfully");
   } catch (error) {
     console.error("Error removing spezzoni:", error);
   }
@@ -85,7 +79,6 @@ export const deleteSpezzone = async (spezzoneId) => {
 export const setSpezzoneSelled = async (spezzoniId) => {
   try {
     await updateDoc(doc(db, "spezzoni", spezzoniId), { aviable: false });
-    console.log("Document with ID: ", spezzoniId, " updated successfully");
   } catch (error) {
     console.error("Error updating spezzoni:", error);
   }
