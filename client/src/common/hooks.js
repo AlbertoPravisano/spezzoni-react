@@ -6,11 +6,11 @@ export const useLoading = () => {
   const loading = useSelector(
     (state) => state.user.loading || state.spezzoni.loading
   );
-  const renderLoader = ({ inverted }) => (
+  const renderLoader = (props) => (
     <Fragment>
       {loading && (
-        <Dimmer active inverted={inverted}>
-          <Loader inverted={inverted} content="Caricamento" />
+        <Dimmer active inverted={props?.inverted}>
+          <Loader inverted={props?.inverted} content="Caricamento" />
         </Dimmer>
       )}
     </Fragment>

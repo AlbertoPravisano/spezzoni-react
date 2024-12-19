@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Checkbox } from "semantic-ui-react";
 
 import { userLoggedIn } from "../../redux/user";
 import { HOME } from "routes";
+import * as storage from "common/sessionStorage";
 
 const NAME_USER = "usr";
 const NAME_PSW = "psw";
@@ -15,7 +16,7 @@ const isFormBenFormata = (usr, psw) =>
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [salvaCredenziali, setSalvaCredenziali] = React.useState(true);
   const [state, setState] = React.useState({
     usr: "",
     psw: "",
@@ -34,6 +35,12 @@ const LoginForm = () => {
 
     if (isFormBenFormata(usr, psw)) {
       dispatch(userLoggedIn({ email: usr, password: psw }));
+      if (salvaCredenziali) {
+        storage.setItem(
+          storage.STORAGE_KEYS.AUTH,
+          JSON.stringify({ email: usr, password: psw })
+        );
+      }
       navigate(HOME);
     }
   };
@@ -62,6 +69,13 @@ const LoginForm = () => {
         type="password"
         error={!state.psw || state.psw.length === 0}
         onChange={handleChange}
+      />
+      <Form.Field
+        name="conditions"
+        control={Checkbox}
+        checked={salvaCredenziali}
+        onChange={() => setSalvaCredenziali(!salvaCredenziali)}
+        label="Resta connesso"
       />
       <br />
       <Button primary type="submit" fluid>

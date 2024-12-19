@@ -3,13 +3,16 @@ import { Input, Button, Grid } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import OffriSpezzone from "components/button/OffriSpezzone";
 import { ELENCO } from "routes";
+import { useLoading } from "common/hooks";
 
 const Home = () => {
   const path = process.env.PUBLIC_URL;
   const navigate = useNavigate();
   const [filterString, setFilterString] = React.useState("");
+  const { renderLoader } = useLoading();
   return (
     <Grid>
+      {renderLoader({ inverted: true })}
       <Grid.Row />
       <Grid.Row />
       <Grid.Row />

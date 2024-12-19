@@ -1,14 +1,27 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Image } from "semantic-ui-react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { HOME } from "../routes";
 import LoginButtonForm from "./login/LoginButtonForm";
 import LoggedUserButtonDropdown from "./login/LoggedUserButtonDropdown";
+import * as storage from "common/sessionStorage";
+import { userLoggedIn } from "../redux/user";
 
-const HeaderPage = ({ user }) => {
+const HeaderPage = () => {
   const path = process.env.PUBLIC_URL;
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
+
+  React.useEffect(() => {
+    const auth = storage.getItem(storage.STORAGE_KEYS.AUTH);
+    if (auth && !user) {
+      const { email, password } = JSON.parse(auth);
+      dispatch(userLoggedIn({ email, password }));
+    }
+  }, [dispatch, user]);
+
   return (
     <Menu>
       <Menu.Item as={NavLink} to={HOME}>
@@ -34,8 +47,4 @@ const HeaderPage = ({ user }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { user: state.user.data };
-};
-
-export default connect(mapStateToProps)(HeaderPage);
+export default HeaderPage;

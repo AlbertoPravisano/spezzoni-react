@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { userLoggedOut } from "../../redux/user";
 
 import { DASHBOARD, HOME } from "routes";
+import * as storage from "common/sessionStorage";
 
 const LoggedUserButtonDropdown = ({ user }) => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const LoggedUserButtonDropdown = ({ user }) => {
         onConfirm={() => {
           setModalOpen(false);
           dispatch(userLoggedOut());
+          storage.deleteItem(storage.STORAGE_KEYS.AUTH);
           navigate(HOME);
         }}
       />
