@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserSpezzoni } from "../redux/spezzoni";
 import {
   Divider,
@@ -11,13 +11,16 @@ import {
   List,
 } from "semantic-ui-react";
 
-const Dashboard = ({ user, spezzoni }) => {
+const Dashboard = () => {
   const dispatch = useDispatch();
+  const { user, spezzoni } = useSelector((state) => ({
+    user: state.user.data,
+    spezzoni: state.spezzoni.data,
+  }));
+
   React.useEffect(() => {
-    if (!spezzoni) {
-      dispatch(getUserSpezzoni(user.uid));
-    }
-  }, [dispatch, spezzoni, user.uid]);
+    dispatch(getUserSpezzoni(user.uid));
+  }, [dispatch, user.uid]);
 
   return (
     <div>
@@ -49,7 +52,7 @@ const Dashboard = ({ user, spezzoni }) => {
           <Icon name="cart" />
           <Header.Content>Spezzoni</Header.Content>
         </Header>
-        {spezzoni && (
+        {spezzoni.length > 0 ? (
           <Grid.Row stretched>
             <Divider horizontal />
             <List as="ul">
@@ -66,15 +69,12 @@ const Dashboard = ({ user, spezzoni }) => {
               ))}
             </List>
           </Grid.Row>
+        ) : (
+          "Nessun spezzone nell'elenco"
         )}
       </Grid>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user.data,
-  spezzoni: state.spezzoni.data,
-});
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

@@ -1,7 +1,7 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
 import * as spezzoniApi from "../api/spezzoni";
 
-const initialState = { loading: false, data: undefined, error: undefined };
+const initialState = { loading: false, data: [], error: undefined };
 const createSlice = buildCreateSlice({
   creators: { asyncThunk: asyncThunkCreator },
 });
@@ -23,7 +23,7 @@ export const spezzoniSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data = action.meta.arg;
+          state.data = action.payload || [];
         },
       }
     ),
@@ -40,7 +40,7 @@ export const spezzoniSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data = action.payload;
+          state.data = action.payload || [];
         },
       }
     ),
@@ -57,7 +57,7 @@ export const spezzoniSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data = action.payload;
+          state.data = action.payload || [];
         },
       }
     ),
@@ -91,7 +91,7 @@ export const spezzoniSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data?.map((spezzone) =>
+          state.data.map((spezzone) =>
             spezzone.id === action.meta.arg
               ? { ...spezzone, aviable: false }
               : spezzone
@@ -112,7 +112,7 @@ export const spezzoniSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data?.filter((spezzone) => spezzone.id !== action.meta.arg);
+          state.data.filter((spezzone) => spezzone.id !== action.meta.arg);
         },
       }
     ),

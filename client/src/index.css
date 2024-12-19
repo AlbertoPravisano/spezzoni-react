@@ -1,0 +1,5 @@
+.ui.invisible.file.input input[type="file"],
+input[type="file"].ui.invisible.file.input {
+  left: -99999px;
+  position: absolute;
+}

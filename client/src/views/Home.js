@@ -1,8 +1,13 @@
 import React from "react";
 import { Input, Button, Grid } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
+import OffriSpezzone from "components/button/OffriSpezzone";
+import { ELENCO } from "routes";
 
 const Home = () => {
   const path = process.env.PUBLIC_URL;
+  const navigate = useNavigate();
+  const [filterString, setFilterString] = React.useState("");
   return (
     <Grid>
       <Grid.Row />
@@ -27,15 +32,23 @@ const Home = () => {
             icon="search"
             iconPosition="left"
             placeholder="Digita qui quello che vuoi cercare o offrire..."
+            onChange={(e) => setFilterString(e.target.value)}
           />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row centered stretched>
         <Grid.Column width="five">
-          <Button primary>Cerca</Button>
+          <Button
+            primary
+            onClick={() =>
+              navigate(`${ELENCO}?s=${encodeURIComponent(filterString)}`)
+            }
+          >
+            Cerca
+          </Button>
         </Grid.Column>
         <Grid.Column width="five">
-          <Button positive>Offri</Button>
+          <OffriSpezzone />
         </Grid.Column>
       </Grid.Row>
     </Grid>

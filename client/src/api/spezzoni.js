@@ -37,10 +37,13 @@ export const getUserSpezzoni = async (userId) => {
 
 export const getSpezzoniByName = async (searchString) => {
   try {
-    const q = query(
-      collection(db, "spezzoni"),
-      where("name", "==", searchString)
-    );
+    const q =
+      searchString === ""
+        ? collection(db, "spezzoni")
+        : query(
+            collection(db, "spezzoni"),
+            where("name", "==", searchString.toLowerCase())
+          );
     const querySnapshot = await getDocs(q);
 
     const spezzoniList = [];
