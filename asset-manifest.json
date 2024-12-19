@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/spezzoni-react/static/css/main.c70c445b.css",
-    "main.js": "/spezzoni-react/static/js/main.1d10be12.js",
+    "main.js": "/spezzoni-react/static/js/main.0e70fcab.js",
     "static/media/brand-icons.svg": "/spezzoni-react/static/media/brand-icons.6729d29753e000c17489.svg",
     "static/media/icons.svg": "/spezzoni-react/static/media/icons.62d9dae4e0040e81c980.svg",
     "static/media/outline-icons.svg": "/spezzoni-react/static/media/outline-icons.9c4845b4b41ef40a22fa.svg",
@@ -20,10 +20,10 @@
     "static/media/outline-icons.woff2": "/spezzoni-react/static/media/outline-icons.687a4990ea22bb1a49d4.woff2",
     "index.html": "/spezzoni-react/index.html",
     "main.c70c445b.css.map": "/spezzoni-react/static/css/main.c70c445b.css.map",
-    "main.1d10be12.js.map": "/spezzoni-react/static/js/main.1d10be12.js.map"
+    "main.0e70fcab.js.map": "/spezzoni-react/static/js/main.0e70fcab.js.map"
   },
   "entrypoints": [
     "static/css/main.c70c445b.css",
-    "static/js/main.1d10be12.js"
+    "static/js/main.0e70fcab.js"
   ]
 }
