@@ -19,8 +19,8 @@ const Dashboard = () => {
   }));
 
   React.useEffect(() => {
-    dispatch(getUserSpezzoni(user.uid));
-  }, [dispatch, user.uid]);
+    dispatch(getUserSpezzoni(user.id));
+  }, [dispatch, user.id]);
 
   return (
     <div>
@@ -60,8 +60,10 @@ const Dashboard = () => {
                 <List.Item key={spezzone.id} as="li">
                   {spezzone.name} x({spezzone.quantity}){" "}
                   <Label
-                    title={spezzone.aviable ? "Disponibile" : "Non disponibile"}
-                    color={spezzone.aviable ? "green" : "red"}
+                    title={
+                      spezzone.available ? "Disponibile" : "Non disponibile"
+                    }
+                    color={spezzone.available ? "green" : "red"}
                     circular
                     empty
                   />

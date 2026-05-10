@@ -17,7 +17,7 @@ export const addSpezzone = async ({ name, owner, quantity }) => {
     name,
     ownerId: owner,
     quantity,
-    aviable: true,
+    available: true,
   });
 };
 
@@ -26,5 +26,5 @@ export const deleteSpezzone = async (spezzoneId) => {
 };
 
 export const setSpezzoneSelled = async (spezzoneId) => {
-  return client.put(`/api/spezzoni/${spezzoneId}`, { aviable: false });
+  return client.put(`/api/spezzoni/${spezzoneId}`, { available: false });
 };

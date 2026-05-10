@@ -25,7 +25,7 @@ export const spezzoniSlice = createSlice({
           state.error = undefined;
           state.data = action.payload || [];
         },
-      }
+      },
     ),
     getUserSpezzoni: create.asyncThunk(
       async (userId) => await spezzoniApi.getUserSpezzoni(userId),
@@ -42,7 +42,7 @@ export const spezzoniSlice = createSlice({
           state.error = undefined;
           state.data = action.payload || [];
         },
-      }
+      },
     ),
     getSpezzoniByString: create.asyncThunk(
       async (filter) => await spezzoniApi.getSpezzoniByName(filter),
@@ -59,7 +59,7 @@ export const spezzoniSlice = createSlice({
           state.error = undefined;
           state.data = action.payload || [];
         },
-      }
+      },
     ),
     addProduct: create.asyncThunk(
       async (spezzone) => await spezzoniApi.addSpezzone(spezzone),
@@ -76,7 +76,7 @@ export const spezzoniSlice = createSlice({
           state.error = undefined;
           state.data.push(action.payload);
         },
-      }
+      },
     ),
     setProductSelled: create.asyncThunk(
       async (spezzoneId) => await spezzoniApi.setSpezzoneSelled(spezzoneId),
@@ -93,11 +93,11 @@ export const spezzoniSlice = createSlice({
           state.error = undefined;
           state.data.map((spezzone) =>
             spezzone.id === action.meta.arg
-              ? { ...spezzone, aviable: false }
-              : spezzone
+              ? { ...spezzone, available: false }
+              : spezzone,
           );
         },
-      }
+      },
     ),
     deleteProduct: create.asyncThunk(
       async (spezzoneId) => await spezzoniApi.deleteSpezzone(spezzoneId),
@@ -114,7 +114,7 @@ export const spezzoniSlice = createSlice({
           state.error = undefined;
           state.data.filter((spezzone) => spezzone.id !== action.meta.arg);
         },
-      }
+      },
     ),
   }),
 });
