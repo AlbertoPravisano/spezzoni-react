@@ -6,7 +6,7 @@ import { ELENCO } from "routes";
 import { useLoading } from "common/hooks";
 
 const Home = () => {
-  const path = process.env.PUBLIC_URL;
+  const baseUrl = import.meta.env.BASE_URL;
   const navigate = useNavigate();
   const [filterString, setFilterString] = React.useState("");
   const { renderLoader } = useLoading();
@@ -18,12 +18,12 @@ const Home = () => {
       <Grid.Row />
       <Grid.Row centered>
         <div>
-          <img alt="logo" src={`${path}/spezzoni/logo.png`} />
+          <img alt="logo" src={`${baseUrl}spezzoni/logo.png`} />
         </div>
         <div>
           <img
             alt="logo"
-            src={`${path}/spezzoni/subtitle.png`}
+            src={`${baseUrl}spezzoni/subtitle.png`}
             style={{ width: "40%" }}
           />
         </div>

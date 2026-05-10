@@ -6,19 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { HOME } from "../routes";
 import LoginButtonForm from "./login/LoginButtonForm";
 import LoggedUserButtonDropdown from "./login/LoggedUserButtonDropdown";
-import * as storage from "common/sessionStorage";
-import { userLoggedIn } from "../redux/user";
+import { userSessionRestored } from "../redux/user";
 
 const HeaderPage = () => {
-  const path = process.env.PUBLIC_URL;
+  const baseUrl = import.meta.env.BASE_URL;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
 
   React.useEffect(() => {
-    const auth = storage.getItem(storage.STORAGE_KEYS.AUTH);
-    if (auth && !user) {
-      const { email, password } = JSON.parse(auth);
-      dispatch(userLoggedIn({ email, password }));
+    if (!user) {
+      dispatch(userSessionRestored());
     }
   }, [dispatch, user]);
 
@@ -27,7 +24,7 @@ const HeaderPage = () => {
       <Menu.Item as={NavLink} to={HOME}>
         <Image
           alt="home"
-          src={`${path}/spezzoni/icon.png`}
+          src={`${baseUrl}spezzoni/icon.png`}
           style={{
             display: "inline-block",
             verticalAlign: "middle",

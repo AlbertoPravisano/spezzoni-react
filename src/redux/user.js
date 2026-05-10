@@ -23,9 +23,9 @@ export const userSlice = createSlice({
         fulfilled: (state, action) => {
           state.loading = false;
           state.error = undefined;
-          state.data = action.meta.arg;
+          state.data = action.payload;
         },
-      }
+      },
     ),
     userLoggedIn: create.asyncThunk(
       async ({ email, password }) => await userApi.signin(email, password),
@@ -42,9 +42,25 @@ export const userSlice = createSlice({
           state.error = undefined;
           state.data = action.payload;
         },
-      }
+      },
+    ),
+    userSessionRestored: create.asyncThunk(
+      async () => await userApi.restoreSession(),
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state) => {
+          state.loading = false;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.data = action.payload;
+        },
+      },
     ),
     userLoggedOut: (state) => {
+      userApi.signout();
       state = initialState;
       return state;
     },
@@ -52,7 +68,11 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { userRegistered, userLoggedIn, userLoggedOut } =
-  userSlice.actions;
+export const {
+  userRegistered,
+  userLoggedIn,
+  userLoggedOut,
+  userSessionRestored,
+} = userSlice.actions;
 
 export default userSlice.reducer;

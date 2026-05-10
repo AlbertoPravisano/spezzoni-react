@@ -5,7 +5,6 @@ import { Form, Button, Checkbox } from "semantic-ui-react";
 
 import { userLoggedIn } from "../../redux/user";
 import { HOME } from "routes";
-import * as storage from "common/sessionStorage";
 
 const NAME_USER = "usr";
 const NAME_PSW = "psw";
@@ -35,12 +34,6 @@ const LoginForm = () => {
 
     if (isFormBenFormata(usr, psw)) {
       dispatch(userLoggedIn({ email: usr, password: psw }));
-      if (salvaCredenziali) {
-        storage.setItem(
-          storage.STORAGE_KEYS.AUTH,
-          JSON.stringify({ email: usr, password: psw })
-        );
-      }
       navigate(HOME);
     }
   };

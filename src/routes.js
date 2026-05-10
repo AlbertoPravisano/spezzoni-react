@@ -1,4 +1,4 @@
-export const BASE_PATH = "/spezzoni-react";
+export const BASE_PATH = "/";
 export const HOME = "/";
 export const DASHBOARD = "/account";
 export const ABACO = "/abaco";

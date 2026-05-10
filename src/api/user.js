@@ -1,80 +1,50 @@
-import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
-import * as firebaseAuth from "firebase/auth";
-import { db, auth } from "./firebase";
+import * as client from "./client";
+import * as storage from "common/sessionStorage";
 
 export const register = async ({ email, psw, ...otherFields }) => {
-  try {
-    const { user } = await firebaseAuth.createUserWithEmailAndPassword(
-      auth,
-      email,
-      psw
-    );
-    const userRef = doc(db, "/users", user.uid);
-    const data = {
-      email,
-      name: otherFields.name,
-      surname: otherFields.surname,
-      phone: otherFields.phone,
-      birthday: otherFields.birthday,
-      city: otherFields.city,
-      uid: user.uid,
-    };
-    await setDoc(userRef, data);
-    return data;
-  } catch (error) {
-    console.error("Error creating user:", error);
-  }
+  const data = await client.post("/api/auth/register", {
+    email,
+    password: psw,
+    name: otherFields.name,
+    surname: otherFields.surname,
+    phone: otherFields.phone,
+    birthday: otherFields.birthday,
+    city: otherFields.city,
+  });
+  client.setToken(data.token);
+  storage.setItem(storage.STORAGE_KEYS.AUTH, data.token);
+  return data.user;
 };
 
 export const signin = async (email, password) => {
+  const data = await client.post("/api/auth/login", { email, password });
+  client.setToken(data.token);
+  storage.setItem(storage.STORAGE_KEYS.AUTH, data.token);
+  return data.user;
+};
+
+export const restoreSession = async () => {
+  const token = storage.getItem(storage.STORAGE_KEYS.AUTH);
+  if (!token) return null;
+  client.setToken(token);
   try {
-    const { user } = await firebaseAuth.signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const userRef = doc(db, "/users", user.uid);
-    const userSnap = await getDoc(userRef);
-    return { ...userSnap.data(), uid: user.uid };
-  } catch (error) {
-    if (error.code === "auth/user-not-found") {
-      console.error("Error user not found:", error);
-    } else {
-      console.error("Error signing in:", error);
-    }
+    return await client.get("/api/auth/me");
+  } catch {
+    client.clearToken();
+    storage.deleteItem(storage.STORAGE_KEYS.AUTH);
+    return null;
   }
 };
 
 export const updateUserData = async (user) => {
-  const userRef = doc(db, "users", user.uid);
-
-  try {
-    await updateDoc(userRef, user);
-  } catch (error) {
-    console.error("Error updating preferences: ", error);
-    throw error;
-  }
+  return client.put(`/api/users/${user.id}`, user);
 };
 
-export async function resetEmail(email) {
-  try {
-    await firebaseAuth.sendSignInLinkToEmail(auth, email, {
-      url: "http://spezzoni.com",
-      handleCodeInApp: true,
-    });
-    console.log("Email sent for email reset.");
-  } catch (error) {
-    console.error("Error sending email reset link:", error);
-  }
-}
+export const resetPassword = async (email) => {
+  await client.post("/api/auth/reset-password", { email });
+};
 
-export async function resetPassword(email) {
-  try {
-    await firebaseAuth.sendPasswordResetEmail(auth, email);
-    console.log("Email sent for password reset.");
-  } catch (error) {
-    console.error("Error sending password reset link:", error);
-  }
-}
-
-export const signout = async () => await firebaseAuth.signOut(auth);
+export const signout = async () => {
+  client.clearToken();
+  storage.deleteItem(storage.STORAGE_KEYS.AUTH);
+};

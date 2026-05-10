@@ -19,8 +19,8 @@ const OffriSpezzone = () => {
       addProduct({
         name: spezzone.name,
         quantity: Number(spezzone.quantity),
-        userId: user.uid,
-      })
+        owner: user.id,
+      }),
     );
     setOpen(false);
   };
