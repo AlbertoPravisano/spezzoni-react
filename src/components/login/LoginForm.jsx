@@ -1,7 +1,16 @@
 import React from "react";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  InputAdornment,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Checkbox } from "semantic-ui-react";
 
 import { userLoggedIn } from "../../redux/user";
 import { HOME } from "routes";
@@ -21,8 +30,8 @@ const LoginForm = () => {
     psw: "",
   });
 
-  const handleChange = (_, data) => {
-    const { name, value } = data;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setState({
       ...state,
       [name]: value || "",
@@ -39,42 +48,60 @@ const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Input
-        fluid
+    <Stack component="form" spacing={2} onSubmit={(event) => {
+      event.preventDefault();
+      handleSubmit();
+    }}>
+      <TextField
+        fullWidth
         autoFocus
         name={NAME_USER}
         value={state.usr}
-        icon="user"
-        iconPosition="left"
         label="Username"
         placeholder="username..."
         error={!state.usr || state.usr.length === 0}
         onChange={handleChange}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonRoundedIcon color="action" />
+              </InputAdornment>
+            ),
+          },
+        }}
       />
-      <Form.Input
-        fluid
+      <TextField
+        fullWidth
         name={NAME_PSW}
         value={state.psw}
-        icon="lock"
-        iconPosition="left"
         label="Password"
         type="password"
         error={!state.psw || state.psw.length === 0}
         onChange={handleChange}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockRoundedIcon color="action" />
+              </InputAdornment>
+            ),
+          },
+        }}
       />
-      <Form.Field
-        name="conditions"
-        control={Checkbox}
-        checked={salvaCredenziali}
-        onChange={() => setSalvaCredenziali(!salvaCredenziali)}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={salvaCredenziali}
+            onChange={() => setSalvaCredenziali(!salvaCredenziali)}
+          />
+        }
         label="Resta connesso"
       />
-      <br />
-      <Button primary type="submit" fluid>
+      <Button variant="contained" type="submit" fullWidth>
         Login
       </Button>
-    </Form>
+    </Stack>
   );
 };
 

@@ -1,6 +1,15 @@
 import React from "react";
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import GoogleIcon from "@mui/icons-material/Google";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LinkRoundedIcon from "@mui/icons-material/LinkRounded";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import XIcon from "@mui/icons-material/X";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import PropTypes from "prop-types";
-import { Button, Icon } from "semantic-ui-react";
 
 const SocialEnum = {
   FACEBOOK: "facebook",
@@ -23,6 +32,17 @@ const SocialButtonType = {
 };
 
 const capitalize = (text = "") => text.charAt(0).toUpperCase() + text.slice(1);
+
+const socialConfig = {
+  facebook: { icon: <FacebookRoundedIcon />, color: "#1877f2" },
+  google: { icon: <GoogleIcon />, color: "#ea4335" },
+  youtube: { icon: <YouTubeIcon />, color: "#ff0000" },
+  whatsapp: { icon: <WhatsAppIcon />, color: "#25d366" },
+  telegram: { icon: <TelegramIcon />, color: "#08c" },
+  linkedin: { icon: <LinkedInIcon />, color: "#0a66c2" },
+  instagram: { icon: <InstagramIcon />, color: "#dd2a7b" },
+  twitter: { icon: <XIcon />, color: "#111827" },
+};
 
 /**
  *
@@ -68,50 +88,37 @@ const SocialButton = ({ href, soloIcona, customText, ...passThroughProps }) => {
   }, [socialType]);
 
   const onClickButton = () => {
-    window.open(href, "newwindow");
+    window.open(href, "_blank", "noopener,noreferrer");
   };
 
   const renderButton = () => {
+    const config = socialConfig[socialType];
+
+    if (soloIcona) {
+      return (
+        <Tooltip title={customText || capitalize(socialType)}>
+          <IconButton
+            aria-label={customText || capitalize(socialType)}
+            onClick={onClickButton}
+            sx={{ color: config.color }}
+            {...passThroughProps}
+          >
+            {config.icon}
+          </IconButton>
+        </Tooltip>
+      );
+    }
+
     return (
-      <React.Fragment>
-        {socialType === SocialEnum.TELEGRAM && (
-          <Button
-            style={{ backgroundColor: "#08c", color: "white" }}
-            icon
-            circular={soloIcona}
-            onClick={onClickButton}
-            {...passThroughProps}
-          >
-            <Icon name={socialType} />
-            {testoButton}
-          </Button>
-        )}
-        {socialType === SocialEnum.WHATSAPP && (
-          <Button
-            style={{ backgroundColor: "#25d366", color: "white" }}
-            icon
-            circular={soloIcona}
-            onClick={onClickButton}
-            {...passThroughProps}
-          >
-            <Icon name={socialType} />
-            {testoButton}
-          </Button>
-        )}
-        {socialType !== SocialEnum.WHATSAPP &&
-          socialType !== SocialEnum.TELEGRAM && (
-            <Button
-              color={SocialEnum[socialType.toUpperCase()]}
-              icon
-              circular={soloIcona}
-              onClick={onClickButton}
-              {...passThroughProps}
-            >
-              <Icon name={socialType} />
-              {testoButton}
-            </Button>
-          )}
-      </React.Fragment>
+      <Button
+        variant="contained"
+        startIcon={config.icon}
+        onClick={onClickButton}
+        sx={{ backgroundColor: config.color, '&:hover': { backgroundColor: config.color } }}
+        {...passThroughProps}
+      >
+        {testoButton}
+      </Button>
     );
   };
 
@@ -119,7 +126,7 @@ const SocialButton = ({ href, soloIcona, customText, ...passThroughProps }) => {
     return renderButton();
   } else {
     return (
-      <Button primary onClick={onClickButton} {...passThroughProps}>
+      <Button variant="contained" onClick={onClickButton} startIcon={<LinkRoundedIcon />} {...passThroughProps}>
         {customText ? customText : "Vai a..."}
       </Button>
     );

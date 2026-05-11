@@ -1,5 +1,12 @@
-.ui.invisible.file.input input[type="file"],
-input[type="file"].ui.invisible.file.input {
+.file-input-hidden {
   left: -99999px;
   position: absolute;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
 }

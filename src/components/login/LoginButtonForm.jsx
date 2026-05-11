@@ -1,8 +1,17 @@
+import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Typography,
+} from "@mui/material";
 import NavText from "components/NavText";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { SIGNUP } from "routes";
-import { Menu, Icon, Modal, Divider, Segment } from "semantic-ui-react";
 import LoginForm from "./LoginForm";
 
 const LoginButtonForm = () => {
@@ -10,9 +19,9 @@ const LoginButtonForm = () => {
 
   return (
     <React.Fragment>
-      <Menu.Item onClick={() => setModalOpen(true)}>
-        <Icon name="user" /> Login
-      </Menu.Item>
+      <Button variant="text" color="inherit" startIcon={<LoginRoundedIcon />} onClick={() => setModalOpen(true)}>
+        Login
+      </Button>
       {modalOpen && <LoginModal setModalOpen={setModalOpen} />}
     </React.Fragment>
   );
@@ -23,20 +32,15 @@ export default LoginButtonForm;
 const LoginModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
   return (
-    <Modal
-      closeIcon
-      open
-      dimmer="blurring"
-      size="tiny"
-      onClose={() => setModalOpen(false)}
-    >
-      <Modal.Header>Effettua il login...</Modal.Header>
-      <Modal.Content>
+    <Dialog open onClose={() => setModalOpen(false)} fullWidth maxWidth="xs">
+      <DialogTitle>Effettua il login...</DialogTitle>
+      <DialogContent>
         <LoginForm />
-        <br />
-        <Divider horizontal>oppure</Divider>
-        <Segment basic textAlign="center">
+        <Divider sx={{ my: 3 }}>oppure</Divider>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography variant="body2" component="span">
           Se non hai ancora un account,{" "}
+          </Typography>
           <NavText
             onClick={() => {
               setModalOpen(false);
@@ -45,8 +49,8 @@ const LoginModal = ({ setModalOpen }) => {
           >
             registrati
           </NavText>
-        </Segment>
-      </Modal.Content>
-    </Modal>
+        </Box>
+      </DialogContent>
+    </Dialog>
   );
 };

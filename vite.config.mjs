@@ -1,20 +1,17 @@
+import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react()],
   base: "/",
-  esbuild: {
-    loader: "jsx",
-    include: /src\/.*\.js$/,
-    exclude: [],
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        ".js": "jsx",
-      },
+  resolve: {
+    alias: {
+      api: resolve(__dirname, "src/api"),
+      common: resolve(__dirname, "src/common"),
+      components: resolve(__dirname, "src/components"),
+      routes: resolve(__dirname, "src/routes.js"),
+      views: resolve(__dirname, "src/views"),
     },
   },
 });
