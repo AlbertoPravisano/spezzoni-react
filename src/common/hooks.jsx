@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export const useLoading = () => {
   const loading = useSelector(
-    (state) => state.user.loading || state.spezzoni.loading
+    (state) => state.user.loading || state.spezzoni.loading,
   );
   const renderLoader = (props) => (
     <Fragment>
@@ -19,7 +19,10 @@ export const useLoading = () => {
               : "rgba(244, 247, 245, 0.72)",
           }}
         >
-          <Stack alignItems="center" spacing={2}>
+          <Stack
+            sx={{ justifyContent: "center", alignItems: "center" }}
+            spacing={2}
+          >
             <CircularProgress color="inherit" />
             <Typography variant="body2">Caricamento</Typography>
           </Stack>

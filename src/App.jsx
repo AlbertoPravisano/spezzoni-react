@@ -56,12 +56,14 @@ const App = () => {
               minHeight: "100vh",
               display: "flex",
               flexDirection: "column",
-              background:
-                "linear-gradient(180deg, rgba(15,118,110,0.08) 0%, rgba(244,247,245,1) 22%, rgba(244,247,245,1) 100%)",
             }}
           >
             <HeaderPage />
-            <Container component="main" maxWidth="lg" sx={{ flexGrow: 1, py: 4 }}>
+            <Container
+              component="main"
+              maxWidth="lg"
+              sx={{ flexGrow: 1, py: 4 }}
+            >
               <Routes>
                 <Route path={HOME} element={<Home />} />
                 <Route path={ABACO} element={<Abaco />} />

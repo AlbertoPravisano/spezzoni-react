@@ -22,7 +22,11 @@ const ElencoSpezzoni = () => {
 
   return (
     <Stack spacing={3}>
-      <Stack direction="row" spacing={1.5} alignItems="center">
+      <Stack
+        direction="row"
+        spacing={1.5}
+        sx={{ justifyContent: "center", alignItems: "center" }}
+      >
         <Inventory2RoundedIcon color="primary" />
         <Typography variant="h4">Spezzoni</Typography>
       </Stack>
@@ -50,7 +54,9 @@ const ElencoSpezzoni = () => {
             ))}
           </Stack>
         ) : (
-          <Typography color="text.secondary">Nessun spezzone nell'elenco</Typography>
+          <Typography color="text.secondary">
+            Nessun spezzone nell'elenco
+          </Typography>
         )}
       </Paper>
     </Stack>

@@ -22,6 +22,7 @@ const Home = () => {
           src={`${baseUrl}spezzoni/logo.png`}
           sx={{ maxWidth: "min(100%, 460px)" }}
         />
+        <br />
         <Box
           component="img"
           alt="subtitle"

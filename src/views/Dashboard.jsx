@@ -26,30 +26,63 @@ const Dashboard = () => {
 
   return (
     <Stack spacing={3}>
-      <Stack direction="row" spacing={1.5} alignItems="center">
+      <Stack
+        direction="row"
+        spacing={1.5}
+        sx={{ justifyContent: "center", alignItems: "center" }}
+      >
         <PersonRoundedIcon color="primary" />
         <Typography variant="h4">Profilo di {user.name}</Typography>
       </Stack>
       <Paper sx={{ p: 3 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField fullWidth label="Nome" value={user.name} InputProps={{ readOnly: true }} />
+            <TextField
+              fullWidth
+              label="Nome"
+              value={user.name}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextField fullWidth label="Cognome" value={user.surname} InputProps={{ readOnly: true }} />
+            <TextField
+              fullWidth
+              label="Cognome"
+              value={user.surname}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField fullWidth label="Città" value={user.city} InputProps={{ readOnly: true }} />
+            <TextField
+              fullWidth
+              label="Città"
+              value={user.city}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField fullWidth label="Telefono" value={user.phone} InputProps={{ readOnly: true }} />
+            <TextField
+              fullWidth
+              label="Telefono"
+              value={user.phone}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField fullWidth label="Email" value={user.email} InputProps={{ readOnly: true }} />
+            <TextField
+              fullWidth
+              label="Email"
+              value={user.email}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
         </Grid>
       </Paper>
-      <Stack direction="row" spacing={1.5} alignItems="center">
+      <Stack
+        direction="row"
+        spacing={1.5}
+        sx={{ justifyContent: "center", alignItems: "center" }}
+      >
         <Inventory2RoundedIcon color="primary" />
         <Typography variant="h4">Spezzoni</Typography>
       </Stack>
@@ -76,7 +109,9 @@ const Dashboard = () => {
             ))}
           </Stack>
         ) : (
-          <Typography color="text.secondary">Nessun spezzone nell'elenco</Typography>
+          <Typography color="text.secondary">
+            Nessun spezzone nell'elenco
+          </Typography>
         )}
       </Paper>
     </Stack>
