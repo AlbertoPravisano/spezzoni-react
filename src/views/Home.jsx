@@ -1,10 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { Box, Button, InputAdornment, Stack, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+
+import { useLoading } from "common/hooks";
 import OffriSpezzone from "components/button/OffriSpezzone";
 import { ELENCO } from "routes";
-import { useLoading } from "common/hooks";
 
 const Home = () => {
   const baseUrl = import.meta.env.BASE_URL;
@@ -12,7 +13,7 @@ const Home = () => {
   const [filterString, setFilterString] = React.useState("");
   const { renderLoader } = useLoading();
   return (
-    <Stack spacing={4} alignItems="center" sx={{ py: { xs: 2, md: 6 } }}>
+    <Stack spacing={4} sx={{ alignItems: "center", py: { xs: 2, md: 6 } }}>
       {renderLoader({ inverted: true })}
       <Box sx={{ textAlign: "center", width: "100%" }}>
         <Box
